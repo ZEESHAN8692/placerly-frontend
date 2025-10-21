@@ -17,11 +17,13 @@ import Utilities from '../pages/Utilities'
 import Test from '../pages/test'
 import FAQ from '../pages/FAQ'
 import AssetsPage from '../pages/Assets'
+import NotFound from '../pages/NotFound'
 
 const Routing = () => {
   return (
    <BrowserRouter>
         <Routes>
+            <Route path='*' element={<NotFound />} />
             <Route path='/' element={<LandingPage />} />
             <Route path='/blogs' element={<Blog />} />
             <Route path='/blog/:id' element={<SingleBlog />} />

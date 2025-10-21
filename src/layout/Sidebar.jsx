@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import {
+  FiGrid,
+  FiDollarSign,
+  FiUsers,
+  FiSettings,
+  FiShield,
+  FiTrendingUp,
+  FiCreditCard,
+  FiClipboard,
+  FiFileText,
+  FiMenu,
+  FiBell,
+  FiSearch,
+} from 'react-icons/fi';
 
 const DashboardLayout = ({ children }) => {
-  const path = useLocation().pathname
+  const path = useLocation().pathname;
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const navigation = [
-    { name: 'Dashboard', icon: '📊', active: true , path:"/dashboard"},
-    { name: 'Debts', icon: '📊', active: true , path:"/dashboard/debts"},
-    { name: 'Executors', icon: '📊', active: true , path:"/dashboard/executors"},
-    { name: 'Utilities', icon: '📊', active: true , path:"/dashboard/utilities"},
-    { name: 'Insurance', icon: '🛡️', active: false , path:"/dashboard/insurance" },
-    // { name: 'Assets', icon: '💼', active: false , path:"/dashboard/"},
-    { name: 'Investments', icon: '📈', active: false , path:"/dashboard"},
-    { name: 'Banking', icon: '🏦', active: false , path:"/dashboard"},
-    
-    { name: 'Planning', icon: '📋', active: false , path:"/dashboard" },
-    { name: 'Reports', icon: '📄', active: false , path:"/dashboard" },
+    { name: 'Dashboard', icon: <FiGrid />, path: '/dashboard' },
+    { name: 'Assets', icon: <FiGrid />, path: '/dashboard/assets' },
+    { name: 'Debts', icon: <FiDollarSign />, path: '/dashboard/debts' },
+    { name: 'Executors', icon: <FiUsers />, path: '/dashboard/executors' },
+    { name: 'Utilities', icon: <FiSettings />, path: '/dashboard/utilities' },
+    { name: 'Insurance', icon: <FiShield />, path: '/dashboard/insurance' },
+    { name: 'Investments', icon: <FiTrendingUp />, path: '/dashboard/investments' },
+    { name: 'Banking', icon: <FiCreditCard />, path: '/dashboard/banking' },
+    { name: 'Planning', icon: <FiClipboard />, path: '/dashboard/planning' },
+    { name: 'Reports', icon: <FiFileText />, path: '/dashboard/reports' },
   ];
 
   return (
@@ -43,18 +56,18 @@ const DashboardLayout = ({ children }) => {
           <ul className="space-y-2">
             {navigation.map((item) => (
               <Link key={item.name} to={item.path}>
-              <li key={item.name}>
-                <button
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                    path=== item.path
-                      ? 'bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-semibold'
-                      : 'text-[#F8FAFC]/70 hover:text-[#F8FAFC] hover:bg-white/5'
-                  }`}
-                >
-                  <span className="text-lg">{item.icon}</span>
-                  {isSidebarOpen && <span>{item.name}</span>}
-                </button>
-              </li>
+                <li>
+                  <button
+                    className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                      path === item.path
+                        ? 'bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-semibold'
+                        : 'text-[#F8FAFC]/70 hover:text-[#F8FAFC] hover:bg-white/5'
+                    }`}
+                  >
+                    <span className="text-lg">{item.icon}</span>
+                    {isSidebarOpen && <span>{item.name}</span>}
+                  </button>
+                </li>
               </Link>
             ))}
           </ul>
@@ -89,19 +102,7 @@ const DashboardLayout = ({ children }) => {
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="p-2 hover:bg-white/5 rounded-lg transition-colors"
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <FiMenu className="w-5 h-5" />
             </button>
             <h2 className="text-xl font-['Playfair_Display',serif] font-bold">
               Dashboard
@@ -111,19 +112,7 @@ const DashboardLayout = ({ children }) => {
           {/* Right Icons */}
           <div className="flex items-center gap-4">
             <button className="p-2 hover:bg-white/5 rounded-lg transition-colors relative">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 17h5l-5 5v-5zM10.5 3.75a6 6 0 0 0-6 6v2.25l-2 2V15h15v-.75l-2-2V9.75a6 6 0 0 0-6-6z"
-                />
-              </svg>
+              <FiBell className="w-5 h-5" />
               <div className="absolute top-1 right-1 w-2 h-2 bg-[#F9C74F] rounded-full"></div>
             </button>
 
@@ -134,19 +123,7 @@ const DashboardLayout = ({ children }) => {
                 placeholder="Search..."
                 className="pl-10 pr-4 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:outline-none focus:border-[#F9C74F] transition-colors w-64"
               />
-              <svg
-                className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-[#F8FAFC]/40"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <FiSearch className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-[#F8FAFC]/40" />
             </div>
           </div>
         </header>
