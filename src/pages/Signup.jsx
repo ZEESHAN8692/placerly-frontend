@@ -105,6 +105,20 @@ const PlacerlySignup = () => {
                                 />
                             </div>
 
+                            {/* Image */}
+                            <div>
+                                <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
+                                    Image
+                                </label>
+                                <input
+                                    type="file"
+                                    name="image"
+                                    onChange={handleInputChange}
+                                    className="w-full px-4 py-3 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
+                                    required
+                                />
+                            </div>
+
                             {/* Password */}
                             <div>
                                 <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">

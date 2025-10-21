@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DashboardLayout from '../layout/sidebar';
 
 const Debts = () => {
   const [debts, setDebts] = useState([
@@ -80,6 +81,7 @@ const Debts = () => {
   const totalSelected = selectedDebts.reduce((sum, debt) => sum + debt.amount, 0);
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -363,6 +365,7 @@ const Debts = () => {
         </div>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

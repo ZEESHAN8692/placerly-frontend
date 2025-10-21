@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DashboardLayout from '../layout/sidebar';
 
 const Insurance = () => {
   const [insurances, setInsurances] = useState([
@@ -100,6 +101,7 @@ const Insurance = () => {
   };
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
@@ -395,6 +397,7 @@ const Insurance = () => {
         </div>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

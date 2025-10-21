@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Footer from "../layout/footer";
 import Header from "../layout/Header";
+import { toast } from "react-toastify";
 
 const LandingPage = () => {
+  toast.success("Welcome to Wealthify!");
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

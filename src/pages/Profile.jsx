@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import Header from '../layout/Header'
+import Footer from '../layout/footer'
 
 const Profile = () => {
     const [profileData, setProfileData] = useState({
@@ -36,6 +38,8 @@ const Profile = () => {
     }
 
     return (
+        <>
+        <Header/>
         <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] to-[#08101D] py-10 px-4">
             <div className="max-w-5xl mx-auto">
                 {/* Header */}
@@ -263,6 +267,8 @@ const Profile = () => {
                 </div>
             </div>
         </div>
+        <Footer/>
+        </>
     )
 }
 

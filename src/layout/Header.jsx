@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { use, useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Header = () => {
+  const path = useLocation().pathname
   const navigate = useNavigate()
   const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
@@ -17,23 +18,27 @@ const Header = () => {
     <>
       {/* Enhanced Header */}
       <header className="flex items-center justify-between border-b border-[#F8FAFC]/10 px-6 py-6 md:px-20 lg:px-40 backdrop-blur-sm bg-[#0A1D35] sticky top-0 z-50">
+        <Link to="/">
         <h2 className="text-[#F8FAFC] text-2xl font-['Playfair_Display',serif] font-bold bg-gradient-to-r from-[#F9C74F] to-[#F9844A] bg-clip-text text-transparent">
           Placerly
         </h2>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-12">
           {[
+            { name: 'Home', path: '/' },
             { name: 'How It Works', path: '#how-it-works' },
             { name: 'About', path: '/about' },
             { name: 'Blogs', path: '/blogs' },
-            { name: 'FAQs', path: '#faqs' },
+            { name: 'FAQs', path: '/faq' },
             { name: 'Contact', path: '/contact' },
           ].map((link, index) => (
             <Link
               key={index}
-              href={link.path}
-              className="text-[#F8FAFC] text-sm font-medium hover:text-[#F9C74F] transition-all duration-300 hover:scale-105 relative group"
+              to={link.path}
+              className={`text-[#F8FAFC] text-sm font-medium hover:text-[#F9C74F] transition-all duration-300 hover:scale-105 relative group ${
+                path === link.path ? 'text-[#F9C74F]' : ''}`}
             >
               {link.name}
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F9C74F] transition-all duration-300 group-hover:w-full"></span>

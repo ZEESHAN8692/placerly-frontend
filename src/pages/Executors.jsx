@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DashboardLayout from '../layout/sidebar';
 
 const Executors = () => {
   const [executors, setExecutors] = useState([
@@ -86,6 +87,7 @@ const Executors = () => {
   };
 
   return (
+    <DashboardLayout>
     <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -365,6 +367,7 @@ const Executors = () => {
         </div>
       </div>
     </div>
+    </DashboardLayout>
   );
 };
 

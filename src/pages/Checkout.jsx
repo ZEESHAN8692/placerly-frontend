@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Footer from '../layout/footer';
+import Header from '../layout/Header';
 
 const Checkout = () => {
   const [billingSameAsAccount, setBillingSameAsAccount] = useState(true);
@@ -47,6 +49,8 @@ const Checkout = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -306,6 +310,8 @@ const Checkout = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
