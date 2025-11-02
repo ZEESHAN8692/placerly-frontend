@@ -13,6 +13,7 @@ import {
   FiMenu,
   FiBell,
   FiSearch,
+  FiBox,
 } from 'react-icons/fi';
 
 const DashboardLayout = ({ children }) => {
@@ -21,7 +22,7 @@ const DashboardLayout = ({ children }) => {
 
   const navigation = [
     { name: 'Dashboard', icon: <FiGrid />, path: '/dashboard' },
-    { name: 'Assets', icon: <FiGrid />, path: '/dashboard/assets' },
+    { name: 'Assets', icon: <FiBox />, path: '/dashboard/assets' },
     { name: 'Debts', icon: <FiDollarSign />, path: '/dashboard/debts' },
     { name: 'Executors', icon: <FiUsers />, path: '/dashboard/executors' },
     { name: 'Utilities', icon: <FiSettings />, path: '/dashboard/utilities' },
@@ -31,7 +32,7 @@ const DashboardLayout = ({ children }) => {
     { name: 'Planning', icon: <FiClipboard />, path: '/dashboard/planning' },
     { name: 'Reports', icon: <FiFileText />, path: '/dashboard/reports' },
   ];
-
+          
   return (
     <div className="flex h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] text-[#F8FAFC]">
       {/* Sidebar */}

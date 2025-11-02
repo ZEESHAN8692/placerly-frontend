@@ -30,6 +30,7 @@ const Header = () => {
             { name: 'Home', path: '/' },
             { name: 'How It Works', path: '#how-it-works' },
             { name: 'About', path: '/about' },
+            { name: 'Pricing', path: '/pricing' },
             { name: 'Blogs', path: '/blogs' },
             { name: 'FAQs', path: '/faq' },
             { name: 'Contact', path: '/contact' },
