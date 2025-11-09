@@ -1,6 +1,9 @@
+import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../queryFunction/queryFunction';
+import { toast } from 'react-toastify';
 
 
 const PlacerlyLogin = () => {
@@ -18,9 +21,23 @@ const PlacerlyLogin = () => {
         }));
     };
 
+    const {mutate , isLoading} = useMutation({
+        mutationFn :login,
+        onSuccess : (data) => {
+            console.log("Login Success",data)
+            toast.success('Login Successfull')
+            navigate('/dashboard')
+        },
+        onError : (error) => {
+            toast.error('Login Failed')
+            console.log(error)
+        }
+    })
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        // console.log('Form submitted:', formData);
+        mutate(formData)
     };
 
     return (

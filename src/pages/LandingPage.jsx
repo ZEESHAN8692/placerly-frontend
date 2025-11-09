@@ -4,7 +4,7 @@ import Header from "../layout/Header";
 import { toast } from "react-toastify";
 
 const LandingPage = () => {
-  toast.success("Welcome to Wealthify!");
+  // toast.success("Welcome to Wealthify!");
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

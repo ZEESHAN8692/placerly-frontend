@@ -1,25 +1,30 @@
+import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebook } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { register } from '../queryFunction/queryFunction';
+import { toast } from 'react-toastify';
+import OtpVerificationModal from '../components/EmailOtp';
 
 const PlacerlySignup = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         password: '',
         confirmPassword: '',
-        terms: false
     });
 
     const [passwordStrength, setPasswordStrength] = useState('weak');
+    const [showOtpModal, setShowOtpModal] = useState(false);
+    const [userId , setUserId] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
+        setFormData((prev) => ({
             ...prev,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: type === 'checkbox' ? checked : value,
         }));
 
         // Password strength logic
@@ -34,9 +39,30 @@ const PlacerlySignup = () => {
         }
     };
 
+    const { mutate, isLoading } = useMutation({
+        mutationFn: register,
+        onSuccess: (data) => {
+                console.log('Registration Success', data?.data?._id);
+                setUserId(data?.data?._id);
+                toast.success('Registration Successful');
+                setShowOtpModal(true);
+           
+        },
+        onError: (error) => {
+            toast.error('Registration Failed');
+            console.error(error);
+        },
+    });
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error('Passwords do not match!');
+            return;
+        }
+
+        mutate(formData);
     };
 
     return (
@@ -46,7 +72,6 @@ const PlacerlySignup = () => {
                 {/* Left Side - Form */}
                 <div className="w-full lg:w-1/2 p-8 sm:p-12 lg:p-16">
                     <div className="max-w-md mx-auto">
-
                         <div className="text-center lg:text-left mb-10">
                             <h1 className="text-3xl sm:text-4xl font-bold text-[#F8FAFC] font-serif mb-4">
                                 Create Your Placerly Account
@@ -105,20 +130,6 @@ const PlacerlySignup = () => {
                                 />
                             </div>
 
-                            {/* Image */}
-                            <div>
-                                <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
-                                    Image
-                                </label>
-                                <input
-                                    type="file"
-                                    name="image"
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-3 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
-                                    required
-                                />
-                            </div>
-
                             {/* Password */}
                             <div>
                                 <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
@@ -135,20 +146,39 @@ const PlacerlySignup = () => {
                                 />
                                 <div className="mt-2 flex h-2 rounded-full bg-[#F8FAFC]/10 overflow-hidden">
                                     <div
-                                        className={`h-full transition-all duration-300 ${passwordStrength === 'weak' ? 'w-1/4 bg-red-500' :
-                                            passwordStrength === 'medium' ? 'w-2/4 bg-yellow-500' :
-                                                'w-full bg-green-500'
-                                            }`}></div>
+                                        className={`h-full transition-all duration-300 ${passwordStrength === 'weak'
+                                            ? 'w-1/4 bg-red-500'
+                                            : passwordStrength === 'medium'
+                                                ? 'w-2/4 bg-yellow-500'
+                                                : 'w-full bg-green-500'
+                                            }`}
+                                    ></div>
                                 </div>
                             </div>
 
+                            {/* Confirm Password */}
+                            <div>
+                                <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
+                                    Confirm Password
+                                </label>
+                                <input
+                                    type="password"
+                                    name="confirmPassword"
+                                    value={formData.confirmPassword}
+                                    onChange={handleInputChange}
+                                    placeholder="Confirm your password"
+                                    className="w-full px-4 py-3 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
+                                    required
+                                />
+                            </div>
 
                             {/* Submit */}
                             <button
                                 type="submit"
-                                className="w-full bg-gradient-to-r from-[#F9C74F] to-[#F9844A] hover:from-[#F9844A] hover:to-[#F9C74F] text-[#0B1F3A] font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-[#F9C74F]/30 transform hover:-translate-y-0.5 transition-all duration-300"
+                                disabled={isLoading}
+                                className="w-full bg-gradient-to-r from-[#F9C74F] to-[#F9844A] hover:from-[#F9844A] hover:to-[#F9C74F] text-[#0B1F3A] font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-[#F9C74F]/30 transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                             >
-                                Create Account
+                                {isLoading ? 'Creating Account...' : 'Create Account'}
                             </button>
                         </form>
 
@@ -170,18 +200,38 @@ const PlacerlySignup = () => {
                                 Facebook
                             </button>
                         </div>
+
                         <p className="mt-4 text-[#F8FAFC]/60 text-sm">
-                            Already have an account? <Link to="/login"><a className="text-[#F9C74F] hover:text-[#F9844A]">Log in</a></Link>
+                            Already have an account?{' '}
+                            <Link to="/login" className="text-[#F9C74F] hover:text-[#F9844A]">
+                                Log in
+                            </Link>
                         </p>
                     </div>
                 </div>
 
-                {/* Right Side - Image (Hidden on smaller screens) */}
-                <div className="hidden lg:block w-1/2 bg-cover bg-center relative" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80')" }}>
+                
+                <div
+                    className="hidden lg:block w-1/2 bg-cover bg-center relative"
+                    style={{
+                        backgroundImage:
+                            "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80')",
+                    }}
+                >
                     <div className="absolute inset-0 bg-black opacity-50"></div>
                 </div>
-
             </div>
+
+            {/* 🔹 OTP Modal */}
+            <OtpVerificationModal
+                isOpen={showOtpModal}
+                onClose={() => setShowOtpModal(false)}
+                userId={userId}
+                onVerified={() => {
+                    setShowOtpModal(false);
+                    navigate('/login');
+                }}
+            />
         </div>
     );
 };

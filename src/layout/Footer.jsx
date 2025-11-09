@@ -39,7 +39,7 @@ const Footer = () => {
           </div>
           <div className="border-t border-[#F8FAFC]/10 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-[#F8FAFC]/50 text-sm">
-              © 2024 Placerly. All rights reserved.
+              © 2025 Placerly. All rights reserved.
             </p>
             <div className="flex gap-6 mt-4 md:mt-0">
               {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((link) => (
