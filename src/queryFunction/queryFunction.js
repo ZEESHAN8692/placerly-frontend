@@ -1,5 +1,5 @@
 import axiosInstance from "../api/axiosInstance"
-import { create_asset_end, delete_asset_end, get_asset_by_id_end, get_assets_end, get_totle_assets_value_end, login_end, register_end, update_asset_end, verify_email_end } from "../api/urls"
+import { create_asset_end, create_debt_end, delete_asset_end, delete_debt_end, get_asset_by_id_end, get_assets_end, get_debt_by_id_end, get_debts_end, get_totle_assets_value_end, login_end, register_end, update_asset_end, update_debt_end, verify_email_end } from "../api/urls"
 
 export const login = async (data) => {
     try {
@@ -85,3 +85,54 @@ export const getTotalAssetsValue = async () => {
         console.log(error)
     }
 }
+
+// Debts
+export const createDebt =async (data)=>{
+    try {
+        const createDebt = await axiosInstance.post(create_debt_end,data)
+        return createDebt.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getDebts =async ()=>{
+    try {
+        const getDebts = await axiosInstance.get(get_debts_end)
+        return getDebts.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getDebtById =async (id)=>{
+    try {
+        const getDebtById = await axiosInstance.get(`${get_debt_by_id_end}/${id}`)
+        return getDebtById.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const updateDebt =async (id,data)=>{
+    try {
+        const updateDebt = await axiosInstance.put(`${update_debt_end}/${id}`,data)
+        return updateDebt.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteDebt =async (id)=>{
+    try {
+        const deleteDebt = await axiosInstance.delete(`${delete_debt_end}/${id}`)
+        return deleteDebt.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+// getDebts, createDebt, updateDebt

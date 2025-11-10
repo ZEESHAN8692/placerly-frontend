@@ -15,7 +15,7 @@ const AssetsPage = () => {
     queryFn: getAssets,
     staleTime: 1000 * 60,
   });
-
+  console.log(data);
   const assets = Array.isArray(data) ? data : data?.data ?? [];
 
   // Mutations
@@ -46,6 +46,8 @@ const AssetsPage = () => {
     name: '',
     balance: '',
     type: '',
+    accountName:'',
+    accountNumber:'',
   });
 
   // Modal open/close
@@ -55,7 +57,7 @@ const AssetsPage = () => {
       setFormData(asset);
     } else {
       setEditMode(false);
-      setFormData({ name: '', balance: '', type: '' });
+      setFormData({ name: '', balance: '', type: '', accountName: '', accountNumber: '' });
     }
     setShowModal(true);
   };
@@ -63,7 +65,7 @@ const AssetsPage = () => {
   const closeModal = () => {
     setShowModal(false);
     setEditMode(false);
-    setFormData({ name: '', balance: '', type: '' });
+    setFormData({ name: '', balance: '', type: '', accountName: '', accountNumber: '' });
   };
 
   // Submit handler
@@ -138,6 +140,19 @@ const AssetsPage = () => {
   return (
     <DashboardLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] p-6 text-[#F8FAFC]">
+         {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
+            <div className="text-2xl font-bold text-[#F8FAFC] mb-2">{data?.totalAssetsValue[0]?.total}</div>
+            <div className="text-[#F8FAFC]/60 text-sm">Total Assets</div>
+          </div>
+          <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
+            <div className="text-2xl font-bold text-[#F8FAFC] mb-2">{data?.count}</div>
+            <div className="text-[#F8FAFC]/60 text-sm">Accounts</div>
+          </div>
+         
+        </div>
+
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
@@ -154,62 +169,74 @@ const AssetsPage = () => {
           </div>
 
           {/* Table */}
-          {/* Table */}
-          <div className="bg-[#0B192D] border border-[#F8FAFC]/10 rounded-xl overflow-hidden shadow-lg">
-            <DataTable
-              columns={columns}
-              data={assets}
-              pagination
-              highlightOnHover
-              dense
-              customStyles={{
-                table: {
-                  style: {
-                    backgroundColor: '#0B192D',
-                  },
+          <DataTable
+            columns={columns}
+            data={assets}
+            pagination
+            highlightOnHover
+            dense
+            customStyles={{
+              table: {
+                style: {
+                  backgroundColor: '#0B192D',
                 },
-                headRow: {
-                  style: {
-                    backgroundColor: '#10233F',
-                    minHeight: '60px',
-                  },
+              },
+              headRow: {
+                style: {
+                  backgroundColor: '#10233F',
+                  height: '60px',
                 },
-                headCells: {
-                  style: {
+              },
+              headCells: {
+                style: {
+                  color: '#F9C74F',
+                  fontWeight: 'bold',
+                  fontSize: '15px',
+                },
+              },
+              rows: {
+                style: {
+                  backgroundColor: '#0B192D',
+                  minHeight: '65px',
+                  borderBottomColor: '#1B2A45',
+                  transition: 'all 0.2s ease',
+                  cursor: 'pointer',
+                },
+                highlightOnHoverStyle: {
+                  backgroundColor: '#1A2F4C',
+                  color: '#F9C74F',
+                  transition: 'all 0.25s ease',
+                },
+              },
+              cells: {
+                style: {
+                  color: '#F8FAFC',
+                  fontSize: '14px',
+                  padding: '15px 20px',
+                },
+              },
+              pagination: {
+                style: {
+                  backgroundColor: '#0B192D',
+                  color: '#FFF',
+                  borderTop: '1px solid #1B2A45',
+                },
+                pageButtonsStyle: {
+                  color: '#FFF',
+                  fill: '#FFF',
+                  '&:hover:not(:disabled)': {
+                    backgroundColor: '#1A2F4C',
                     color: '#F9C74F',
-                    fontWeight: 'bold',
-                    fontSize: '15px',
+                  },
+                  '&:disabled': {
+                    opacity: 0.4,
                   },
                 },
-                rows: {
-                  style: {
-                    backgroundColor: '#0B192D',
-                    minHeight: '65px',
-                    borderBottomColor: '#1B2A45',
-                    '&:hover': {
-                      backgroundColor: '#112744',
-                      color: '#F8FAFC',
-                      cursor: 'pointer',
-                    },
-                  },
-                },
-                cells: {
-                  style: {
-                    color: '#F8FAFC',
-                    fontSize: '14px',
-                    padding: '15px 20px',
-                  },
-                },
-                pagination: {
-                  style: {
-                    backgroundColor: '#0B192D',
-                    color: '#FFF',
-                    borderTop: '1px solid #1B2A45',
-                  },
-                },
-              }}
-            />
-          </div>
+              },
+            }}
+          />
+
+
 
         </div>
 
@@ -232,21 +259,37 @@ const AssetsPage = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Name"
+                  placeholder="Zeeshan Khan"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
                 <input
                   type="text"
                   value={formData.type}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  placeholder="Type"
+                  placeholder="Credit Card"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
                 <input
                   type="number"
                   value={formData.balance}
                   onChange={(e) => setFormData({ ...formData, balance: e.target.value })}
-                  placeholder="Balance"
+                  placeholder="50000"
+                  className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
+                />
+
+                 <input
+                  type="text"
+                  value={formData.accountName}
+                  onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
+                  placeholder="Enter Account Name"
+                  className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
+                />
+
+                <input
+                  type="number"
+                  value={formData.accountNumber}
+                  onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
+                  placeholder="Enter Account Number"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
 
