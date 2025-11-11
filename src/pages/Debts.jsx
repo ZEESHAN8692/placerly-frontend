@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import DashboardLayout from '../layout/sidebar';
 import DataTable from 'react-data-table-component';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createDebt, getDebts, updateDebt } from '../queryFunction/queryFunction';
+import { createDebt, deleteDebt, getDebts, updateDebt } from '../queryFunction/queryFunction';
 import { toast } from 'react-toastify';
 import { FiEdit, FiTrash2, FiX } from 'react-icons/fi';
 
@@ -40,6 +40,19 @@ const Debts = () => {
     onError: () => toast.error('Debt Update Failed'),
   });
 
+
+  
+    const { mutate: deleteMutate, isLoading: isDeleting } = useMutation({
+      mutationFn: (id) => deleteDebt(id),
+      onSuccess: () => {
+        toast.success('Asset Deleted Successfully');
+        queryClient.invalidateQueries(['assets']);
+      },
+      onError: () => toast.error('Failed to delete asset'),
+    });
+
+
+
   // Local state
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
@@ -64,6 +77,7 @@ const Debts = () => {
         amount: '',
         accountName: '',
         accountNumber: '',
+        dueDate: '',
       });
     }
     setShowModal(true);
@@ -78,7 +92,15 @@ const Debts = () => {
       amount: '',
       accountName: '',
       accountNumber: '',
+      dueDate: '',
     });
+  };
+
+
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this asset?')) {
+      deleteMutate(id);
+    }
   };
 
   // Submit handler
@@ -96,6 +118,7 @@ const Debts = () => {
       amount: parseFloat(formData.amount),
       accountName: formData.accountName,
       accountNumber: formData.accountNumber,
+      dueDate: formData.dueDate
     };
 
     if (editMode) {
@@ -123,7 +146,7 @@ const Debts = () => {
           <button onClick={() => openModal(row)}>
             <FiEdit className="text-yellow-400 hover:text-yellow-300" />
           </button>
-          <button onClick={() => toast.info('Delete API not implemented yet.')}>
+          <button onClick={() => handleDelete(row.id ?? row._id)}>
             <FiTrash2 className="text-red-400 hover:text-red-300" />
           </button>
         </div>
@@ -290,6 +313,14 @@ const Debts = () => {
                   value={formData.accountNumber}
                   onChange={(e) => setFormData({ ...formData, accountNumber: e.target.value })}
                   placeholder="Enter Account Number"
+                  className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
+                />
+
+                <input
+                  type="date"
+                  value={formData.dueDate}
+                  onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                  placeholder="Enter Due Date"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
 

@@ -9,11 +9,12 @@ import {
   FiTrendingUp,
   FiCreditCard,
   FiClipboard,
-  FiFileText,
   FiMenu,
   FiBell,
   FiSearch,
   FiBox,
+  FiUser,
+  FiCalendar,
 } from 'react-icons/fi';
 
 const DashboardLayout = ({ children }) => {
@@ -24,13 +25,13 @@ const DashboardLayout = ({ children }) => {
     { name: 'Dashboard', icon: <FiGrid />, path: '/dashboard' },
     { name: 'Assets', icon: <FiBox />, path: '/dashboard/assets' },
     { name: 'Debts', icon: <FiDollarSign />, path: '/dashboard/debts' },
-    { name: 'Executors', icon: <FiUsers />, path: '/dashboard/executors' },
-    { name: 'Utilities', icon: <FiSettings />, path: '/dashboard/utilities' },
+    { name: 'Utilities', icon: <FiClipboard />, path: '/dashboard/utilities' },
     { name: 'Insurance', icon: <FiShield />, path: '/dashboard/insurance' },
+    { name: 'Executors', icon: <FiUsers />, path: '/dashboard/executors' },
     { name: 'Investments', icon: <FiTrendingUp />, path: '/dashboard/investments' },
     { name: 'Banking', icon: <FiCreditCard />, path: '/dashboard/banking' },
-    { name: 'Planning', icon: <FiClipboard />, path: '/dashboard/planning' },
-    { name: 'Reports', icon: <FiFileText />, path: '/dashboard/reports' },
+    { name: 'Calendar', icon: <FiCalendar />, path: '/dashboard/calendar' },
+    { name: 'Profile', icon: <FiUser />, path: '/dashboard/profile' },
   ];
           
   return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DashboardLayout from '../layout/sidebar';
 import DataTable from 'react-data-table-component';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createAsset, getAssets, updateAsset } from '../queryFunction/queryFunction';
+import { createAsset, getAssets, updateAsset, deleteAsset } from '../queryFunction/queryFunction';
 import { toast } from 'react-toastify';
 import { FiEdit, FiTrash2, FiX } from 'react-icons/fi';
 
@@ -15,10 +15,9 @@ const AssetsPage = () => {
     queryFn: getAssets,
     staleTime: 1000 * 60,
   });
-  console.log(data);
   const assets = Array.isArray(data) ? data : data?.data ?? [];
 
-  // Mutations
+  // ===== Mutations =====
   const { mutate: createMutate, isLoading: isCreating } = useMutation({
     mutationFn: (payload) => createAsset(payload),
     onSuccess: () => {
@@ -39,18 +38,28 @@ const AssetsPage = () => {
     onError: () => toast.error('Asset Update Failed'),
   });
 
-  // Local state
+
+  const { mutate: deleteMutate, isLoading: isDeleting } = useMutation({
+    mutationFn: (id) => deleteAsset(id),
+    onSuccess: () => {
+      toast.success('Asset Deleted Successfully');
+      queryClient.invalidateQueries(['assets']);
+    },
+    onError: () => toast.error('Failed to delete asset'),
+  });
+
+  // ===== Local State =====
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     balance: '',
     type: '',
-    accountName:'',
-    accountNumber:'',
+    accountName: '',
+    accountNumber: '',
   });
 
-  // Modal open/close
+  // ===== Modal Handling =====
   const openModal = (asset = null) => {
     if (asset) {
       setEditMode(true);
@@ -68,7 +77,14 @@ const AssetsPage = () => {
     setFormData({ name: '', balance: '', type: '', accountName: '', accountNumber: '' });
   };
 
-  // Submit handler
+ 
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure you want to delete this asset?')) {
+      deleteMutate(id);
+    }
+  };
+
+  // ===== Submit Handler =====
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -81,6 +97,8 @@ const AssetsPage = () => {
       name: formData.name,
       type: formData.type,
       balance: parseFloat(formData.balance),
+      accountName: formData.accountName,
+      accountNumber: formData.accountNumber,
     };
 
     if (editMode) {
@@ -90,7 +108,7 @@ const AssetsPage = () => {
     }
   };
 
-  // Columns
+  // ===== Table Columns =====
   const columns = [
     { name: 'Name', selector: (row) => row.name, sortable: true },
     { name: 'Type', selector: (row) => row.type, sortable: true },
@@ -106,9 +124,7 @@ const AssetsPage = () => {
           <button onClick={() => openModal(row)}>
             <FiEdit className="text-yellow-400 hover:text-yellow-300" />
           </button>
-          <button
-            onClick={() => toast.info('Delete API not implemented yet.')}
-          >
+          <button onClick={() => handleDelete(row.id ?? row._id)}>
             <FiTrash2 className="text-red-400 hover:text-red-300" />
           </button>
         </div>
@@ -140,105 +156,89 @@ const AssetsPage = () => {
   return (
     <DashboardLayout>
       <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] p-6 text-[#F8FAFC]">
-         {/* Stats Cards */}
+        {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
-            <div className="text-2xl font-bold text-[#F8FAFC] mb-2">{data?.totalAssetsValue[0]?.total}</div>
+            <div className="text-2xl font-bold text-[#F8FAFC] mb-2">
+              {data?.totalAssetsValue?.[0]?.total ?? 0}
+            </div>
             <div className="text-[#F8FAFC]/60 text-sm">Total Assets</div>
           </div>
           <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
-            <div className="text-2xl font-bold text-[#F8FAFC] mb-2">{data?.count}</div>
+            <div className="text-2xl font-bold text-[#F8FAFC] mb-2">{data?.count ?? 0}</div>
             <div className="text-[#F8FAFC]/60 text-sm">Accounts</div>
           </div>
-         
         </div>
 
-        <div className="max-w-6xl mx-auto">
-          {/* Header */}
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-[#F9C74F]">Assets</h1>
-              <p className="text-[#F8FAFC]/70">Manage all your assets easily</p>
-            </div>
-            <button
-              onClick={() => openModal()}
-              className="px-6 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-all"
-            >
-              + Add Asset
-            </button>
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <div>
+            <h1 className="text-3xl font-bold text-[#F9C74F]">Assets</h1>
+            <p className="text-[#F8FAFC]/70">Manage all your assets easily</p>
           </div>
+          <button
+            onClick={() => openModal()}
+            className="px-6 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-all"
+          >
+            + Add Asset
+          </button>
+        </div>
 
-          {/* Table */}
-          <DataTable
-            columns={columns}
-            data={assets}
-            pagination
-            highlightOnHover
-            dense
-            customStyles={{
-              table: {
-                style: {
-                  backgroundColor: '#0B192D',
-                },
+        {/* Table */}
+        <DataTable
+          columns={columns}
+          data={assets}
+          pagination
+          highlightOnHover
+          dense
+          progressPending={isDeleting}
+          customStyles={{
+            table: { style: { backgroundColor: '#0B192D' } },
+            headRow: { style: { backgroundColor: '#10233F', height: '60px' } },
+            headCells: {
+              style: { color: '#F9C74F', fontWeight: 'bold', fontSize: '15px' },
+            },
+            rows: {
+              style: {
+                backgroundColor: '#0B192D',
+                minHeight: '65px',
+                borderBottomColor: '#1B2A45',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer',
               },
-              headRow: {
-                style: {
-                  backgroundColor: '#10233F',
-                  height: '60px',
-                },
+              highlightOnHoverStyle: {
+                backgroundColor: '#1A2F4C',
+                color: '#F9C74F',
+                transition: 'all 0.25s ease',
               },
-              headCells: {
-                style: {
-                  color: '#F9C74F',
-                  fontWeight: 'bold',
-                  fontSize: '15px',
-                },
+            },
+            cells: {
+              style: {
+                color: '#F8FAFC',
+                fontSize: '14px',
+                padding: '15px 20px',
               },
-              rows: {
-                style: {
-                  backgroundColor: '#0B192D',
-                  minHeight: '65px',
-                  borderBottomColor: '#1B2A45',
-                  transition: 'all 0.2s ease',
-                  cursor: 'pointer',
-                },
-                highlightOnHoverStyle: {
+            },
+            pagination: {
+              style: {
+                backgroundColor: '#0B192D',
+                color: '#FFF',
+                borderTop: '1px solid #1B2A45',
+              },
+              pageButtonsStyle: {
+                color: '#FFF',
+                fill: '#FFF',
+                '&:hover:not(:disabled)': {
                   backgroundColor: '#1A2F4C',
                   color: '#F9C74F',
-                  transition: 'all 0.25s ease',
+                },
+                '&:disabled': {
+                  opacity: 0.4,
                 },
               },
-              cells: {
-                style: {
-                  color: '#F8FAFC',
-                  fontSize: '14px',
-                  padding: '15px 20px',
-                },
-              },
-              pagination: {
-                style: {
-                  backgroundColor: '#0B192D',
-                  color: '#FFF',
-                  borderTop: '1px solid #1B2A45',
-                },
-                pageButtonsStyle: {
-                  color: '#FFF',
-                  fill: '#FFF',
-                  '&:hover:not(:disabled)': {
-                    backgroundColor: '#1A2F4C',
-                    color: '#F9C74F',
-                  },
-                  '&:disabled': {
-                    opacity: 0.4,
-                  },
-                },
-              },
-            }}
-          />
-
-
-
-        </div>
+            },
+          }}
+        />
 
         {/* Add/Edit Modal */}
         {showModal && (
@@ -259,32 +259,30 @@ const AssetsPage = () => {
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="Zeeshan Khan"
+                  placeholder="Enter Name"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
                 <input
                   type="text"
                   value={formData.type}
                   onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  placeholder="Credit Card"
+                  placeholder="Enter Type"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
                 <input
                   type="number"
                   value={formData.balance}
                   onChange={(e) => setFormData({ ...formData, balance: e.target.value })}
-                  placeholder="50000"
+                  placeholder="Enter Balance"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
-
-                 <input
+                <input
                   type="text"
                   value={formData.accountName}
                   onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
                   placeholder="Enter Account Name"
                   className="w-full px-3 py-2 bg-white/5 border border-[#F8FAFC]/20 rounded-lg"
                 />
-
                 <input
                   type="number"
                   value={formData.accountNumber}
@@ -304,8 +302,8 @@ const AssetsPage = () => {
                         ? 'Updating...'
                         : 'Update'
                       : isCreating
-                        ? 'Adding...'
-                        : 'Add'}
+                      ? 'Adding...'
+                      : 'Add'}
                   </button>
                   <button
                     type="button"

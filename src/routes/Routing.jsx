@@ -18,6 +18,9 @@ import Test from '../pages/test'
 import FAQ from '../pages/FAQ'
 import AssetsPage from '../pages/Assets'
 import NotFound from '../pages/NotFound'
+import Investments from '../pages/Investments'
+import Banking from '../pages/Banking'
+import Calendar from '../pages/Calendar'
 
 const Routing = () => {
   return (
@@ -29,17 +32,21 @@ const Routing = () => {
             <Route path='/blog/:id' element={<SingleBlog />} />
             <Route path='/signup' element={<Signup/>}/>
             <Route path='/login' element={<Login/>}/>
-            <Route path='/profile' element={<Profile/>}/>
+           
             <Route path='/contact' element={<ContactUs/>}/>
             <Route path='/pricing' element={<Pricing/>}/>
             <Route path='/checkout' element={<Checkout/>}/>
             <Route path='/faq' element={<FAQ/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
+             <Route path='/dashboard/profile' element={<Profile/>}/>
             <Route path='/dashboard/executors' element={<Executors/>}/>
             <Route path='/dashboard/debts' element={<Debts/>}/>
             <Route path='/dashboard/insurance' element={<Insurance/>}/>
             <Route path='/dashboard/utilities' element={<Utilities/>}/>
             <Route path='/dashboard/assets' element={<AssetsPage/>}/>
+            <Route path='/dashboard/investments' element={<Investments/>}/>
+            <Route path='/dashboard/banking' element={<Banking/>}/>
+            <Route path='/dashboard/calendar' element={<Calendar/>}/>
             <Route path='/dashboard/test' element={<Test/>}/>
         </Routes>
    </BrowserRouter>
