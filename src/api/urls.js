@@ -36,6 +36,35 @@ const get_utilities_by_id_end = "api/utility";
 const update_utilities_end = "api/update-utility";
 const delete_utilities_end = "api/delelte-utilities";
 
+// Banking
+const create_bankings_end = "api/create-bankings";
+const get_bankings_end = "api/bankings";
+const get_bankings_by_id_end = "api/banking";
+const update_bankings_end = "api/update-banking";
+const delete_bankings_end = "api/delelte-bankings";
+const get_totle_bankings_value_end = "api/totle-bankings";
+
+// Investment
+const create_investments_end = "api/create-investments";
+const get_investments_end = "api/investments";
+const get_investments_by_id_end = "api/investment";
+const update_investments_end = "api/update-investment";
+const delete_investments_end = "api/delelte-investments";
+const get_totle_investments_value_end = "api/totle-investments";
+
+// Pricing 
+const get_Pricings_end = "api/pricings";
+const get_Pricing_by_id_end = "api/pricing";
+
+// Subscriptions 
+const create_checkout_session_end = "api/create-checkout-session"
+const verify_payment_end ="api/verify-payment"
+
+
+
+
+
+
 export {
     base_url,
     login_end,
@@ -65,6 +94,22 @@ export {
     get_utilities_end,
     get_utilities_by_id_end,
     update_utilities_end,
-    delete_utilities_end
-   
+    delete_utilities_end,
+    create_bankings_end,
+    get_bankings_end,
+    get_bankings_by_id_end,
+    update_bankings_end,
+    delete_bankings_end,
+    create_investments_end,
+    get_totle_bankings_value_end,
+    get_investments_end,
+    get_investments_by_id_end,
+    update_investments_end,
+    delete_investments_end,
+    get_totle_investments_value_end,
+    get_Pricings_end,
+    get_Pricing_by_id_end,
+    create_checkout_session_end,
+    verify_payment_end
+
 }

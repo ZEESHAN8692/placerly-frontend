@@ -105,27 +105,8 @@ const Header = () => {
               {/* Dropdown Menu */}
               {dropdownOpen && (
                 <div className="absolute right-0 mt-3 w-44 bg-[#0F2646] border border-[#F8FAFC]/10 rounded-lg shadow-lg z-50">
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-3 text-sm text-[#F8FAFC] hover:bg-[#F9C74F]/10 hover:text-[#F9C74F] transition"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    Profile
-                  </Link>
-                  <Link
-                    to="/profile"
-                    className="block px-4 py-3 text-sm text-[#F8FAFC] hover:bg-[#F9C74F]/10 hover:text-[#F9C74F] transition"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    Dashboard
-                  </Link>
-                  <Link
-                    to="/dashboard"
-                    className="block px-4 py-3 text-sm text-[#F8FAFC] hover:bg-[#F9C74F]/10 hover:text-[#F9C74F] transition"
-                    onClick={() => setDropdownOpen(false)}
-                  >
-                    Settings
-                  </Link>
+                  
+                  
                   <button
                     onClick={() => {
                       handleLogout()

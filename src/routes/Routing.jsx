@@ -21,6 +21,9 @@ import NotFound from '../pages/NotFound'
 import Investments from '../pages/Investments'
 import Banking from '../pages/Banking'
 import Calendar from '../pages/Calendar'
+import AboutUs from '../pages/AboutUs'
+import PaymentSuccess from '../pages/PaymentSuccess'
+import PaymentFailed from '../pages/PaymentFailed'
 
 const Routing = () => {
   return (
@@ -34,8 +37,12 @@ const Routing = () => {
             <Route path='/login' element={<Login/>}/>
            
             <Route path='/contact' element={<ContactUs/>}/>
+            <Route path='/about' element={<AboutUs/>}/>
+            <Route path='/contact' element={<ContactUs/>}/>
             <Route path='/pricing' element={<Pricing/>}/>
-            <Route path='/checkout' element={<Checkout/>}/>
+            <Route path='/checkout/:id' element={<Checkout/>}/>
+            <Route path='/payment-success' element={<PaymentSuccess/>}/>
+            <Route path='/payment-failed' element={<PaymentFailed/>}/>
             <Route path='/faq' element={<FAQ/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
              <Route path='/dashboard/profile' element={<Profile/>}/>

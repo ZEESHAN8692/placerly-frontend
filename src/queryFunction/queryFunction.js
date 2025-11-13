@@ -1,5 +1,5 @@
 import axiosInstance from "../api/axiosInstance"
-import { create_asset_end, create_debt_end, create_insurance_end, create_utilities_end, delete_asset_end, delete_debt_end, delete_insurance_end, delete_utilities_end,  get_asset_by_id_end, get_assets_end, get_debt_by_id_end, get_debts_end, get_insurance_by_id_end, get_insurance_end, get_totle_assets_value_end, get_utilities_by_id_end, get_utilities_end, login_end, profile_end, register_end, reset_password_end, update_asset_end, update_debt_end, update_insurance_end, update_profile_end, update_utilities_end, verify_email_end } from "../api/urls"
+import { create_asset_end, create_bankings_end, create_debt_end, create_insurance_end, create_investments_end, create_utilities_end, delete_asset_end, delete_bankings_end, delete_debt_end, delete_insurance_end, delete_investments_end, delete_utilities_end,  get_asset_by_id_end, get_assets_end, get_bankings_by_id_end, get_bankings_end, get_debt_by_id_end, get_debts_end, get_insurance_by_id_end, get_insurance_end, get_investments_by_id_end, get_investments_end, get_Pricing_by_id_end, get_Pricings_end, get_totle_assets_value_end, get_totle_bankings_value_end, get_totle_investments_value_end, get_utilities_by_id_end, get_utilities_end, login_end, profile_end, register_end, reset_password_end, update_asset_end, update_bankings_end, update_debt_end, update_insurance_end, update_investments_end, update_profile_end, update_utilities_end, verify_email_end } from "../api/urls"
 
 export const login = async (data) => {
     try {
@@ -259,5 +259,138 @@ export const deleteUtility =async (id)=>{
 }
 
 
+// Banking 
+
+export const createBanking =async (data)=>{
+    try {
+        const createBankings = await axiosInstance.post(create_bankings_end,data)
+        return createBankings.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getBankings =async ()=>{
+    try {
+        const getBankings = await axiosInstance.get(get_bankings_end)
+        return getBankings.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getBankingById =async (id)=>{
+    try {
+        const getBankingById = await axiosInstance.get(`${get_bankings_by_id_end}/${id}`)
+        return getBankingById.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const updateBanking =async (id,data)=>{
+    try {
+        const updateBankings = await axiosInstance.put(`${update_bankings_end}/${id}`,data)
+        return updateBankings.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteBanking =async (id)=>{
+    try {
+        const deleteBankings = await axiosInstance.delete(`${delete_bankings_end}/${id}`)
+        return deleteBankings.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getBankingValue =async ()=>{
+    try {
+        const getBankingValue = await axiosInstance.get(get_totle_bankings_value_end)
+        return getBankingValue.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// Investment
+
+export const createInvestment =async (data)=>{
+    try {
+        const createInvestments = await axiosInstance.post(create_investments_end,data)
+        return createInvestments.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getInvestments =async ()=>{
+    try {
+        const getInvestments = await axiosInstance.get(get_investments_end)
+        return getInvestments.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+export const getInvestmentById =async (id)=>{
+    try {
+        const getInvestmentById = await axiosInstance.get(`${get_investments_by_id_end}/${id}`)
+        return getInvestmentById.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const updateInvestment =async (id,data)=>{
+    try {
+        const updateInvestments = await axiosInstance.put(`${update_investments_end}/${id}`,data)
+        return updateInvestments.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteInvestment =async (id)=>{
+    try {
+        const deleteInvestments = await axiosInstance.delete(`${delete_investments_end}/${id}`)
+        return deleteInvestments.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const totalValueOfInvestments =async ()=>{
+    try {
+        const totalValueOfInvestments = await axiosInstance.get(get_totle_investments_value_end)
+        return totalValueOfInvestments.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+// Pricing 
+
+export const getPricing =async ()=>{
+    try {
+        const getPricing = await axiosInstance.get(get_Pricings_end)
+        return getPricing.data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const getPricingById =async (id)=>{
+    try {
+        const getPricingById = await axiosInstance.get(`${get_Pricing_by_id_end}/${id}`)
+        return getPricingById.data
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 // getDebts, createDebt, updateDebt
