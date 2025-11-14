@@ -24,6 +24,7 @@ import Calendar from '../pages/Calendar'
 import AboutUs from '../pages/AboutUs'
 import PaymentSuccess from '../pages/PaymentSuccess'
 import PaymentFailed from '../pages/PaymentFailed'
+import InvitePage from '../pages/InvitePage'
 
 const Routing = () => {
   return (
@@ -43,9 +44,10 @@ const Routing = () => {
             <Route path='/checkout/:id' element={<Checkout/>}/>
             <Route path='/payment-success' element={<PaymentSuccess/>}/>
             <Route path='/payment-failed' element={<PaymentFailed/>}/>
+            <Route path="/executor/invite/:token" element={<InvitePage />} />
             <Route path='/faq' element={<FAQ/>}/>
             <Route path='/dashboard' element={<Dashboard/>}/>
-             <Route path='/dashboard/profile' element={<Profile/>}/>
+            <Route path='/dashboard/profile' element={<Profile/>}/>
             <Route path='/dashboard/executors' element={<Executors/>}/>
             <Route path='/dashboard/debts' element={<Debts/>}/>
             <Route path='/dashboard/insurance' element={<Insurance/>}/>

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Footer from "../layout/footer";
 import Header from "../layout/Header";
 import { toast } from "react-toastify";
+import { Car } from "lucide-react";
+import Carousel from "../components/Carousel";
 
 const LandingPage = () => {
   // toast.success("Welcome to Wealthify!");
@@ -15,7 +17,7 @@ const LandingPage = () => {
     <div className="bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] font-[Inter,sans-serif] text-[#F8FAFC] min-h-screen overflow-x-hidden">
       <div className="flex flex-col min-h-screen">
         <Header/>
-
+        <Carousel/>
         {/* Enhanced Hero Section */}
         <main className="flex flex-col gap-20 md:gap-32">
           <section
@@ -65,7 +67,7 @@ const LandingPage = () => {
               </div>
             </div>
           </section>
-
+        
           {/* Enhanced How It Works */}
           <section className="px-6 md:px-20">
             <h2 className="text-center text-5xl font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mb-20">

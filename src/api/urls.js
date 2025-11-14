@@ -60,6 +60,11 @@ const get_Pricing_by_id_end = "api/pricing";
 const create_checkout_session_end = "api/create-checkout-session"
 const verify_payment_end ="api/verify-payment"
 
+// Executors
+const executer_invite_end = "api/executor/invite"
+
+
+
 
 
 
@@ -110,6 +115,7 @@ export {
     get_Pricings_end,
     get_Pricing_by_id_end,
     create_checkout_session_end,
-    verify_payment_end
+    verify_payment_end,
+    executer_invite_end
 
 }
