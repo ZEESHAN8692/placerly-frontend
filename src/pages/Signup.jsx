@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../queryFunction/queryFunction';
 import { toast } from 'react-toastify';
 import OtpVerificationModal from '../components/EmailOtp';
+import { HiEye, HiEyeOff } from "react-icons/hi";
+
 
 const PlacerlySignup = () => {
     const navigate = useNavigate();
@@ -18,7 +20,9 @@ const PlacerlySignup = () => {
 
     const [passwordStrength, setPasswordStrength] = useState('weak');
     const [showOtpModal, setShowOtpModal] = useState(false);
-    const [userId , setUserId] = useState('');
+    const [userId, setUserId] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const handleInputChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -42,11 +46,11 @@ const PlacerlySignup = () => {
     const { mutate, isLoading } = useMutation({
         mutationFn: register,
         onSuccess: (data) => {
-                console.log('Registration Success', data?.data?._id);
-                setUserId(data?.data?._id);
-                toast.success('Registration Successful');
-                setShowOtpModal(true);
-           
+            console.log('Registration Success', data?.data?._id);
+            setUserId(data?.data?._id);
+            toast.success('Registration Successful');
+            setShowOtpModal(true);
+
         },
         onError: (error) => {
             toast.error('Registration Failed');
@@ -131,45 +135,70 @@ const PlacerlySignup = () => {
                             </div>
 
                             {/* Password */}
-                            <div>
+                            <div className='relative'>
                                 <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
                                     Password
                                 </label>
+
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     value={formData.password}
                                     onChange={handleInputChange}
                                     placeholder="Create a password"
-                                    className="w-full px-4 py-3 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
+                                    className="w-full px-4 py-3 pr-12 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
                                     required
                                 />
+
+                                {/* Eye Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-[52px] transform -translate-y-1/2 text-[#F8FAFC]/60 hover:text-[#F9C74F] transition"
+                                >
+                                    {showPassword ? <HiEyeOff size={22} /> : <HiEye size={22} />}
+                                </button>
+
                                 <div className="mt-2 flex h-2 rounded-full bg-[#F8FAFC]/10 overflow-hidden">
                                     <div
                                         className={`h-full transition-all duration-300 ${passwordStrength === 'weak'
-                                            ? 'w-1/4 bg-red-500'
-                                            : passwordStrength === 'medium'
-                                                ? 'w-2/4 bg-yellow-500'
-                                                : 'w-full bg-green-500'
+                                                ? 'w-1/4 bg-red-500'
+                                                : passwordStrength === 'medium'
+                                                    ? 'w-2/4 bg-yellow-500'
+                                                    : 'w-full bg-green-500'
                                             }`}
                                     ></div>
                                 </div>
                             </div>
 
                             {/* Confirm Password */}
-                            <div>
+                            <div className="relative">
                                 <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
                                     Confirm Password
                                 </label>
+
                                 <input
-                                    type="password"
+                                    type={showConfirmPassword ? "text" : "password"}
                                     name="confirmPassword"
                                     value={formData.confirmPassword}
                                     onChange={handleInputChange}
                                     placeholder="Confirm your password"
-                                    className="w-full px-4 py-3 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
+                                    className="w-full px-4 py-3 pr-12 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
                                     required
                                 />
+
+                                {/* Eye Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute right-4 top-[52px] transform -translate-y-1/2 text-[#F8FAFC]/60 hover:text-[#F9C74F] transition"
+                                >
+                                    {showConfirmPassword ? (
+                                        <HiEyeOff size={22} />
+                                    ) : (
+                                        <HiEye size={22} />
+                                    )}
+                                </button>
                             </div>
 
                             {/* Submit */}
@@ -210,7 +239,7 @@ const PlacerlySignup = () => {
                     </div>
                 </div>
 
-                
+
                 <div
                     className="hidden lg:block w-1/2 bg-cover bg-center relative"
                     style={{

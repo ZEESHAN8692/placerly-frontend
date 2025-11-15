@@ -4,9 +4,11 @@ import { FaGoogle, FaFacebook } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../queryFunction/queryFunction';
 import { toast } from 'react-toastify';
+import { HiEye, HiEyeOff } from "react-icons/hi";
 
 
 const PlacerlyLogin = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -21,14 +23,14 @@ const PlacerlyLogin = () => {
         }));
     };
 
-    const {mutate , isLoading} = useMutation({
-        mutationFn :login,
-        onSuccess : (data) => {
-            console.log("Login Success",data)
+    const { mutate, isLoading } = useMutation({
+        mutationFn: login,
+        onSuccess: (data) => {
+            console.log("Login Success", data)
             toast.success('Login Successfull')
             navigate('/dashboard')
         },
-        onError : (error) => {
+        onError: (error) => {
             toast.error('Login Failed')
             console.log(error)
         }
@@ -75,19 +77,33 @@ const PlacerlyLogin = () => {
                             </div>
 
                             {/* Password */}
-                            <div>
+                            <div className="relative">
                                 <label className="block text-sm font-semibold text-[#F8FAFC]/80 mb-2">
                                     Password
                                 </label>
+
                                 <input
-                                    type="password"
+                                    type={showPassword ? "text" : "password"}
                                     name="password"
                                     value={formData.password}
                                     onChange={handleInputChange}
                                     placeholder="Enter your password"
-                                    className="w-full px-4 py-3 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
+                                    className="w-full px-4 py-3 pr-12 border border-[#F8FAFC]/20 rounded-lg bg-[#08101D]/60 text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent transition duration-200"
                                     required
                                 />
+
+                                {/* Eye Toggle Button */}
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-4 top-13 transform -translate-y-1/2 text-[#F8FAFC]/60 hover:text-[#F9C74F] transition"
+                                >
+                                    {showPassword ? (
+                                        <HiEyeOff size={22} />
+                                    ) : (
+                                        <HiEye size={22} />
+                                    )}
+                                </button>
                             </div>
 
                             {/* Submit */}

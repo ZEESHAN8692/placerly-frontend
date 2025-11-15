@@ -62,9 +62,12 @@ const verify_payment_end ="api/verify-payment"
 
 // Executors
 const executer_invite_end = "api/executor/invite"
+const create_executors_end = "api/create-executors"
+const executors_end = "api/executors"
+const delelte_executors_end = "api/delelte-executors"
 
-
-
+// Dashboard 
+const dashboard_end = "api/dashboard"
 
 
 
@@ -116,6 +119,10 @@ export {
     get_Pricing_by_id_end,
     create_checkout_session_end,
     verify_payment_end,
-    executer_invite_end
+    executer_invite_end,
+    create_executors_end,
+    executors_end,
+    delelte_executors_end,
+    dashboard_end
 
 }

@@ -12,7 +12,7 @@ const Header = () => {
   const dropdownRef = useRef(null)
 
   const token = Cookies.get("token");
-  console.log("Token from cookie:", token);
+  // console.log("Token from cookie:", token);
 
   useEffect(() => {
     if (token) {

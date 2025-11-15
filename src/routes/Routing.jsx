@@ -1,65 +1,69 @@
-import React from 'react'
-import { BrowserRouter, Route, Routes  } from 'react-router-dom'
-import LandingPage from '../pages/LandingPage'
-import Blog from '../pages/Blog'
-import SingleBlog from '../pages/SingleBlag'
-import Signup from '../pages/signup'
-import Login from '../pages/Login'
-import Profile from '../pages/Profile'
-import ContactUs from '../pages/ContactUs'
-import Executors from '../pages/Executors'
-import Pricing from '../pages/Pricing'
-import Checkout from '../pages/Checkout'
-import Dashboard from '../pages/Dashboard'
-import Debts from '../pages/Debts'
-import Insurance from '../pages/Insurance'
-import Utilities from '../pages/Utilities'
-import Test from '../pages/test'
-import FAQ from '../pages/FAQ'
-import AssetsPage from '../pages/Assets'
-import NotFound from '../pages/NotFound'
-import Investments from '../pages/Investments'
-import Banking from '../pages/Banking'
-import Calendar from '../pages/Calendar'
-import AboutUs from '../pages/AboutUs'
-import PaymentSuccess from '../pages/PaymentSuccess'
-import PaymentFailed from '../pages/PaymentFailed'
-import InvitePage from '../pages/InvitePage'
+import React, { lazy, Suspense } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import WealthSpinner from "../components/Spinner";
+
+const LandingPage = lazy(() => import("../pages/LandingPage"));
+const Blog = lazy(() => import("../pages/Blog"));
+const SingleBlog = lazy(() => import("../pages/SingleBlag"));
+const Signup = lazy(() => import("../pages/signup"));
+const Login = lazy(() => import("../pages/Login"));
+const Profile = lazy(() => import("../pages/Profile"));
+const ContactUs = lazy(() => import("../pages/ContactUs"));
+const Executors = lazy(() => import("../pages/Executors"));
+const Pricing = lazy(() => import("../pages/Pricing"));
+const Checkout = lazy(() => import("../pages/Checkout"));
+const Dashboard = lazy(() => import("../pages/Dashboard"));
+const Debts = lazy(() => import("../pages/Debts"));
+const Insurance = lazy(() => import("../pages/Insurance"));
+const Utilities = lazy(() => import("../pages/Utilities"));
+const Test = lazy(() => import("../pages/test"));
+const FAQ = lazy(() => import("../pages/FAQ"));
+const AssetsPage = lazy(() => import("../pages/Assets"));
+const NotFound = lazy(() => import("../pages/NotFound"));
+const Investments = lazy(() => import("../pages/Investments"));
+const Banking = lazy(() => import("../pages/Banking"));
+const Calendar = lazy(() => import("../pages/Calendar"));
+const AboutUs = lazy(() => import("../pages/AboutUs"));
+const PaymentSuccess = lazy(() => import("../pages/PaymentSuccess"));
+const PaymentFailed = lazy(() => import("../pages/PaymentFailed"));
+const InvitePage = lazy(() => import("../pages/InvitePage"));
+
+
 
 const Routing = () => {
   return (
-   <BrowserRouter>
+    <BrowserRouter>
+      <Suspense fallback={<WealthSpinner />}>
         <Routes>
-            <Route path='*' element={<NotFound />} />
-            <Route path='/' element={<LandingPage />} />
-            <Route path='/blogs' element={<Blog />} />
-            <Route path='/blog/:id' element={<SingleBlog />} />
-            <Route path='/signup' element={<Signup/>}/>
-            <Route path='/login' element={<Login/>}/>
-           
-            <Route path='/contact' element={<ContactUs/>}/>
-            <Route path='/about' element={<AboutUs/>}/>
-            <Route path='/contact' element={<ContactUs/>}/>
-            <Route path='/pricing' element={<Pricing/>}/>
-            <Route path='/checkout/:id' element={<Checkout/>}/>
-            <Route path='/payment-success' element={<PaymentSuccess/>}/>
-            <Route path='/payment-failed' element={<PaymentFailed/>}/>
-            <Route path="/executor/invite/:token" element={<InvitePage />} />
-            <Route path='/faq' element={<FAQ/>}/>
-            <Route path='/dashboard' element={<Dashboard/>}/>
-            <Route path='/dashboard/profile' element={<Profile/>}/>
-            <Route path='/dashboard/executors' element={<Executors/>}/>
-            <Route path='/dashboard/debts' element={<Debts/>}/>
-            <Route path='/dashboard/insurance' element={<Insurance/>}/>
-            <Route path='/dashboard/utilities' element={<Utilities/>}/>
-            <Route path='/dashboard/assets' element={<AssetsPage/>}/>
-            <Route path='/dashboard/investments' element={<Investments/>}/>
-            <Route path='/dashboard/banking' element={<Banking/>}/>
-            <Route path='/dashboard/calendar' element={<Calendar/>}/>
-            <Route path='/dashboard/test' element={<Test/>}/>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blog/:id" element={<SingleBlog />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/contact" element={<ContactUs />} />
+          <Route path="/about" element={<AboutUs />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="/checkout/:id" element={<Checkout />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-failed" element={<PaymentFailed />} />
+          <Route path="/executor/invite/:token" element={<InvitePage />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/dashboard/profile" element={<Profile />} />
+          <Route path="/dashboard/executors" element={<Executors />} />
+          <Route path="/dashboard/debts" element={<Debts />} />
+          <Route path="/dashboard/insurance" element={<Insurance />} />
+          <Route path="/dashboard/utilities" element={<Utilities />} />
+          <Route path="/dashboard/assets" element={<AssetsPage />} />
+          <Route path="/dashboard/investments" element={<Investments />} />
+          <Route path="/dashboard/banking" element={<Banking />} />
+          <Route path="/dashboard/calendar" element={<Calendar />} />
+          <Route path="/dashboard/test" element={<Test />} />
         </Routes>
-   </BrowserRouter>
-  )
-}
+      </Suspense>
+    </BrowserRouter>
+  );
+};
 
-export default Routing
+export default Routing;
