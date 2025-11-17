@@ -69,6 +69,12 @@ const delelte_executors_end = "api/delelte-executors"
 // Dashboard 
 const dashboard_end = "api/dashboard"
 
+// Contact Us 
+const contact_us_end = "api/create-enquiry"
+
+
+
+
 
 
 
@@ -123,6 +129,7 @@ export {
     create_executors_end,
     executors_end,
     delelte_executors_end,
-    dashboard_end
+    dashboard_end,
+    contact_us_end
 
 }

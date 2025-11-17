@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { FiSend, FiUser, FiX } from "react-icons/fi";
+import { FiMessageSquare, FiSend, FiUser, FiX } from "react-icons/fi";
 import { motion } from "framer-motion";
 
 const ChatBox = () => {
@@ -8,7 +8,8 @@ const ChatBox = () => {
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef(null);
-  const [open, setOpen] = useState(true);
+
+  const [open, setOpen] = useState(false);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -18,7 +19,6 @@ const ChatBox = () => {
     setMessages((prev) => [...prev, newMessage]);
     setInput("");
 
-    // Simulate bot reply
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
@@ -31,15 +31,20 @@ const ChatBox = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+
   if (!open)
     return (
-      <button
+      <motion.button
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ type: "spring", stiffness: 200 }}
         onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] p-4 rounded-full shadow-lg hover:scale-105 transition-transform"
+        className="fixed bottom-6 right-6 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
       >
-        💬
-      </button>
+        <FiMessageSquare className="" size={24} color="#fff"/>
+      </motion.button>
     );
+
 
   return (
     <motion.div
@@ -51,7 +56,7 @@ const ChatBox = () => {
       <div className="flex items-center justify-between p-4 bg-[#08101D] border-b border-[#F8FAFC]/10">
         <div className="flex items-center gap-3">
           <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-          <p className="text-[#F8FAFC] font-semibold">Placerly • Online</p>
+          <p className="text-[#F8FAFC] font-semibold">Support • Online</p>
         </div>
         <button
           onClick={() => setOpen(false)}

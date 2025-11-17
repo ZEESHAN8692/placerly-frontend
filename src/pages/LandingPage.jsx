@@ -4,6 +4,8 @@ import Header from "../layout/Header";
 import { toast } from "react-toastify";
 import { Car } from "lucide-react";
 import Carousel from "../components/Carousel";
+import { Link } from "react-router-dom";
+import ContactUsComp from "../components/ContactUsComp";
 
 const LandingPage = () => {
   // toast.success("Welcome to Wealthify!");
@@ -43,15 +45,19 @@ const LandingPage = () => {
                 A modern-classic wealth management platform that transforms how you grow and protect your financial future.
               </p>
               <div className="flex flex-wrap justify-center gap-6 mt-8">
-                <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300 group">
-                  <span className="flex items-center gap-2">
-                    Get Started
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </span>
-                </button>
-                <button className="h-14 px-8 bg-white/10 backdrop-blur-sm border border-white/20 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/20 hover:shadow-2xl hover:shadow-white/20 hover:scale-105 transition-all duration-300">
-                  Watch Demo
-                </button>
+                <Link to="/pricing">
+                  <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300 group">
+                    <span className="flex items-center gap-2">
+                      Get Started
+                      <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    </span>
+                  </button>
+                </Link>
+                <Link to="/demo">
+                  <button className="h-14 px-8 bg-white/10 backdrop-blur-sm border border-white/20 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/20 hover:shadow-2xl hover:shadow-white/20 hover:scale-105 transition-all duration-300">
+                    Watch Demo
+                  </button>
+                </Link>
               </div>
               
               {/* Trust Indicators */}
@@ -214,7 +220,7 @@ const LandingPage = () => {
               </div>
             </div>
           </section>
-
+          <ContactUsComp/>
           {/* Enhanced FAQ */}
           <section className="px-6 md:px-20 py-24">
             <div className="max-w-4xl mx-auto">
@@ -269,12 +275,16 @@ const LandingPage = () => {
                   Join thousands of users who are already taking control of their financial future with Placerly.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300">
-                    Start Free Trial
-                  </button>
-                  <button className="h-14 px-8 border border-[#F8FAFC]/30 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/10 hover:scale-105 transition-all duration-300">
-                    Schedule a Demo
-                  </button>
+                  <Link to="/pricing">
+                    <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300">
+                      Start Free Trial
+                    </button>
+                  </Link>
+                  <Link to="/pricing">
+                    <button className="h-14 px-8 border border-[#F8FAFC]/30 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/10 hover:scale-105 transition-all duration-300">
+                      Schedule a Demo
+                    </button>
+                  </Link>
                 </div>
                 <p className="text-[#F8FAFC]/50 text-sm mt-6">
                   No credit card required • 14-day free trial • Cancel anytime

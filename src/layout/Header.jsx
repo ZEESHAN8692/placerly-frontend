@@ -62,6 +62,7 @@ const Header = () => {
             { name: 'About', path: '/about' },
             { name: 'Pricing', path: '/pricing' },
             { name: 'Blogs', path: '/blogs' },
+            { name: 'Services', path: '/services' },
             { name: 'FAQs', path: '/faq' },
             { name: 'Contact', path: '/contact' },
           ].map((link, index) => (

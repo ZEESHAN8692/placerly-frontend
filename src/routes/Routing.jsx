@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WealthSpinner from "../components/Spinner";
 
+
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Blog = lazy(() => import("../pages/Blog"));
 const SingleBlog = lazy(() => import("../pages/SingleBlag"));
@@ -27,6 +28,7 @@ const AboutUs = lazy(() => import("../pages/AboutUs"));
 const PaymentSuccess = lazy(() => import("../pages/PaymentSuccess"));
 const PaymentFailed = lazy(() => import("../pages/PaymentFailed"));
 const InvitePage = lazy(() => import("../pages/InvitePage"));
+const Services = lazy(() => import("../pages/Services"));
 
 
 
@@ -44,6 +46,7 @@ const Routing = () => {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/services" element={<Services />} />
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
