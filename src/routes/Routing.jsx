@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WealthSpinner from "../components/Spinner";
 import ProtectedSubscription from "./ProtectedSubscription";
+import UserChat from "../pages/Chat";
 
 
 
@@ -41,6 +42,7 @@ const Routing = () => {
       <Suspense fallback={<WealthSpinner />}>
         <Routes>
           <Route path="*" element={<NotFound />} />
+          <Route path="/chat" element={<UserChat />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/blog/:slug" element={<SingleBlog />} />

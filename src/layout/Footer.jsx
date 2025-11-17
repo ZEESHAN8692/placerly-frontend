@@ -9,9 +9,10 @@ const Footer = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="col-span-1 md:col-span-2">
-              <h3 className="text-2xl font-['Playfair_Display',serif] font-bold bg-gradient-to-r from-[#F9C74F] to-[#F9844A] bg-clip-text text-transparent mb-4">
+              <img src="logo.png" alt="" className='h-[60px]'/>
+              {/* <h3 className="text-2xl font-['Playfair_Display',serif] font-bold bg-gradient-to-r from-[#F9C74F] to-[#F9844A] bg-clip-text text-transparent mb-4">
                 Placerly
-              </h3>
+              </h3> */}
               <p className="text-[#F8FAFC]/60 max-w-md leading-relaxed">
                 Your trusted partner in wealth management. Empowering financial freedom through innovative technology and personalized insights.
               </p>

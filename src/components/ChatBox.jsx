@@ -1,116 +1,175 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FiMessageSquare, FiSend, FiUser, FiX } from "react-icons/fi";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { io } from "socket.io-client";
+import Cookies from "js-cookie";
+import { MessageCircle, X, Send, Minimize2 } from "lucide-react";
+
+const socket = io("http://localhost:8000");
 
 const ChatBox = () => {
-  const [messages, setMessages] = useState([
-    { sender: "bot", text: "Hello! How can we help you today?" },
-  ]);
-  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [msg, setMsg] = useState("");
+  const [userId, setUserId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
+
   const messagesEndRef = useRef(null);
 
-  const [open, setOpen] = useState(false);
-
-  const handleSend = (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-
-    const newMessage = { sender: "user", text: input };
-    setMessages((prev) => [...prev, newMessage]);
-    setInput("");
-
-    setTimeout(() => {
-      setMessages((prev) => [
-        ...prev,
-        { sender: "bot", text: "Thank you for your message! 😊" },
-      ]);
-    }, 1000);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  useEffect(() => scrollToBottom(), [messages]);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    const token = Cookies.get("token");
+    socket.emit("registerUser", { token });
+
+    const onUserRegistered = (data) => setUserId(data.userId);
+
+    const onHistory = (newMsgs) => {
+      setMessages((prev) => {
+        // Duplicate avoid + append
+        const ids = new Set(prev.map((m) => m._id || m.timestamp));
+        const filtered = newMsgs.filter((m) => !ids.has(m._id || m.timestamp));
+        return [...prev, ...filtered];
+      });
+    };
+
+    const onReceive = (data) => {
+      setMessages((prev) => [...prev, data]);
+    };
+
+    socket.on("userRegistered", onUserRegistered);
+    socket.on("messageHistory", onHistory);
+    socket.on("receiveMessage", onReceive);
+
+    return () => {
+      socket.off("userRegistered", onUserRegistered);
+      socket.off("messageHistory", onHistory);
+      socket.off("receiveMessage", onReceive);
+    };
+  }, []);
+
+  const send = (e) => {
+    e.preventDefault();
+    if (!msg.trim()) return;
+    socket.emit("sendMessage", { message: msg });
+    setMsg("");
+  };
+
+  const formatTime = (ts) => {
+    if (!ts) return "";
+    const d = new Date(ts);
+    return isNaN(d.getTime()) ? "" : d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
+
+  const toggleChat = () => {
+    setIsOpen(!isOpen);
+    setIsMinimized(false);
+  };
+
+  // const minimizeChat = () => setIsMinimized(true);
+  const toggleMinimize = () => setIsMinimized(prev => !prev);
 
 
-  if (!open)
+  if (!isOpen) {
     return (
-      <motion.button
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ type: "spring", stiffness: 200 }}
-        onClick={() => setOpen(true)}
-        className="fixed bottom-6 right-6 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] p-4 rounded-full shadow-lg hover:scale-110 transition-transform"
-      >
-        <FiMessageSquare className="" size={24} color="#fff"/>
-      </motion.button>
+      <div className="pointer-events-auto z-[9999] fixed bottom-6 right-6">
+        <button
+          onClick={toggleChat}
+          className="bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300"
+        >
+          <MessageCircle className="w-8 h-8" />
+        </button>
+      </div>
     );
-
+  }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="fixed bottom-6 right-6 w-80 md:w-96 bg-[#0B1F3A]/95 border border-[#F8FAFC]/10 rounded-2xl shadow-xl backdrop-blur-md overflow-hidden"
+    <div
+      className={`fixed bottom-6 right-6 z-50 transition-all duration-300 ${isMinimized ? "w-80 h-16" : "w-96 h-[500px]"
+        }`}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 bg-[#08101D] border-b border-[#F8FAFC]/10">
-        <div className="flex items-center gap-3">
-          <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-          <p className="text-[#F8FAFC] font-semibold">Support • Online</p>
-        </div>
-        <button
-          onClick={() => setOpen(false)}
-          className="text-[#F8FAFC]/60 hover:text-[#F9C74F] transition"
-        >
-          <FiX size={18} />
-        </button>
-      </div>
+      <div className="bg-[#0B1F3A]/95 backdrop-blur-xl border border-[#F8FAFC]/10 rounded-2xl shadow-2xl flex flex-col h-full overflow-hidden">
 
-      {/* Messages */}
-      <div className="p-4 space-y-3 h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-[#F9C74F]/30">
-        {messages.map((msg, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className={`flex ${
-              msg.sender === "user" ? "justify-end" : "justify-start"
-            }`}
-          >
-            <div
-              className={`max-w-[75%] px-4 py-2 rounded-2xl text-sm shadow-md ${
-                msg.sender === "user"
-                  ? "bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A]"
-                  : "bg-[#08101D]/70 text-[#F8FAFC]"
-              }`}
-            >
-              {msg.text}
+        {/* Header */}
+        <div className="bg-gradient-to-r from-[#0B1F3A] to-[#1a365d] p-4 border-b border-[#F8FAFC]/10">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] rounded-full flex items-center justify-center">
+                <MessageCircle className="w-5 h-5 text-[#0B1F3A]" />
+              </div>
+              <div>
+                <h3 className="font-bold text-white text-lg">Support Chat</h3>
+                <p className="text-xs text-gray-300">
+                  {userId ? `User: ${userId}` : "Connecting..."}
+                </p>
+              </div>
             </div>
-          </motion.div>
-        ))}
-        <div ref={messagesEndRef} />
-      </div>
 
-      {/* Input */}
-      <form
-        onSubmit={handleSend}
-        className="flex items-center p-3 border-t border-[#F8FAFC]/10 bg-[#08101D]"
-      >
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Type your message..."
-          className="flex-1 px-3 py-2 bg-transparent border border-[#F8FAFC]/20 rounded-lg text-[#F8FAFC] placeholder-[#F8FAFC]/40 focus:ring-2 focus:ring-[#F9C74F] focus:border-transparent text-sm"
-        />
-        <button
-          type="submit"
-          className="ml-3 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] p-2 rounded-lg hover:opacity-90 transition-all"
-        >
-          <FiSend className="text-[#0B1F3A]" size={18} />
-        </button>
-      </form>
-    </motion.div>
+            <div className="flex items-center gap-2">
+              <button onClick={toggleMinimize} className="p-2 hover:bg-white/10 rounded-lg">
+                <Minimize2 className="w-4 h-4 text-gray-300" />
+              </button>
+              <button onClick={toggleChat} className="p-2 hover:bg-white/10 rounded-lg">
+                <X className="w-4 h-4 text-gray-300" />
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {!isMinimized && (
+          <>
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4">
+              {messages.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full text-gray-400">
+                  <MessageCircle className="w-12 h-12 mb-4 opacity-50" />
+                  <p className="text-center text-sm">No messages yet</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {messages.map((m, i) => (
+                    <div key={i} className={`flex ${m.sender === "user" ? "justify-end" : "justify-start"}`}>
+                      <div
+                        className={`max-w-xs px-4 py-3 rounded-2xl ${m.sender === "user"
+                            ? "bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-br-none"
+                            : "bg-white/10 text-white border border-white/20 rounded-bl-none"
+                          }`}
+                      >
+                        <p className="text-sm">{m.message}</p>
+                        <div className="text-xs mt-1 text-gray-300">{formatTime(m.timestamp)}</div>
+                      </div>
+                    </div>
+                  ))}
+                  <div ref={messagesEndRef} />
+                </div>
+              )}
+            </div>
+
+            {/* Input */}
+            <div className="p-4 border-t border-[#F8FAFC]/10 bg-[#0B1F3A]/80">
+              <form onSubmit={send} className="flex gap-3">
+                <input
+                  type="text"
+                  value={msg}
+                  onChange={(e) => setMsg(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-1 px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-400"
+                />
+                <button
+                  type="submit"
+                  disabled={!msg.trim()}
+                  className="px-6 py-3 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-xl font-semibold"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
   );
 };
 
