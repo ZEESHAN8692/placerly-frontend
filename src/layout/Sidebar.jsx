@@ -67,6 +67,7 @@ const DashboardLayout = ({ children }) => {
             <h1 className="text-2xl font-['Playfair_Display',serif] font-bold bg-gradient-to-r from-[#F9C74F] to-[#F9844A] bg-clip-text text-transparent">
               Placerly
             </h1>
+            // <img src="logo.png" alt="" className='h-[40px]'/>
           ) : (
             <div className="w-8 h-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] rounded-full"></div>
           )}

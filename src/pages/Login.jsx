@@ -28,7 +28,7 @@ const PlacerlyLogin = () => {
         onSuccess: (data) => {
             console.log("Login Success", data)
             toast.success('Login Successfull')
-            navigate('/dashboard')
+            navigate('/')
         },
         onError: (error) => {
             toast.error('Login Failed')

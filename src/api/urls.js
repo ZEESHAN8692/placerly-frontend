@@ -72,10 +72,14 @@ const dashboard_end = "api/dashboard"
 // Contact Us 
 const contact_us_end = "api/create-enquiry"
 
+// Blogs
+const get_blog_end = "api/blogs"
+const get_blog_by_slug = "api/blog"
 
-
-
-
+// comment 
+const add_comment_end = "api/add-comment"
+const delete_comment_end = "api/delete-comment"
+const get_comments_end = "api/get-comments"
 
 
 
@@ -130,6 +134,11 @@ export {
     executors_end,
     delelte_executors_end,
     dashboard_end,
-    contact_us_end
+    contact_us_end,
+    get_blog_by_slug,
+    get_blog_end,
+    add_comment_end,
+    delete_comment_end,
+    get_comments_end
 
 }

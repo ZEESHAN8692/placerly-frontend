@@ -1,17 +1,20 @@
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import Header from "../layout/Header";
+import Cookies from "js-cookie";
 
 import { loadStripe } from "@stripe/stripe-js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getPricingById } from "../queryFunction/queryFunction";
 import axiosInstance from "../api/axiosInstance";
 import { create_checkout_session_end } from "../api/urls";
 import Footer from "../layout/footer";
+import { toast } from "react-toastify";
 
 const Checkout = () => {
+  const navigate = useNavigate()
   const { id } = useParams();
-
+  const token  = Cookies.get("token");
   const { data: plan, isLoading, isError } = useQuery({
     queryKey: ["singlePlan", id],
     queryFn: () => getPricingById(id),
@@ -35,8 +38,11 @@ const Checkout = () => {
     e.preventDefault();
 
     try {
-
-      const response = await axiosInstance.post(create_checkout_session_end, {
+      if(!token){
+        toast.error('Please login first')
+        navigate('/login')
+      }else{
+         const response = await axiosInstance.post(create_checkout_session_end, {
         planId: id,
         address: billingAddress,
       })
@@ -50,6 +56,9 @@ const Checkout = () => {
       } else {
         alert("Failed to start payment. Please try again.");
       }
+      }
+
+     
     } catch (error) {
       console.error("Payment error:", error);
       alert("Something went wrong. Try again later.");
@@ -118,6 +127,7 @@ const Checkout = () => {
                   type="submit"
                   className="w-full py-4 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300 mt-6"
                 >
+
                   Proceed to Payment
                 </button>
               </form>

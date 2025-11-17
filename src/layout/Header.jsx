@@ -50,9 +50,7 @@ const Header = () => {
    
       <header className="flex items-center justify-between border-b border-[#F8FAFC]/10 px-6 py-6 md:px-20 lg:px-40 backdrop-blur-sm bg-[#0A1D35] sticky top-0 z-50">
         <Link to="/">
-          <h2 className="text-[#F8FAFC] text-2xl font-['Playfair_Display',serif] font-bold bg-gradient-to-r from-[#F9C74F] to-[#F9844A] bg-clip-text text-transparent">
-            Placerly
-          </h2>
+        <img src="logo.png" alt="" className='h-[50px]'/>
         </Link>
 
         <nav className="hidden md:flex gap-12">
@@ -65,6 +63,9 @@ const Header = () => {
             { name: 'Services', path: '/services' },
             { name: 'FAQs', path: '/faq' },
             { name: 'Contact', path: '/contact' },
+            token ? { name: 'Dashboard', path: '/dashboard' } : { name: '', path: '' },
+
+
           ].map((link, index) => (
             <Link
               key={index}

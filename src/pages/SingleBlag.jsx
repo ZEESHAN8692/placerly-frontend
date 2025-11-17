@@ -1,231 +1,140 @@
-import React, { useState } from 'react';
-import Footer from '../layout/footer';
-import Header from '../layout/Header';
-import { Link } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
+import React, { useState } from "react";
+import Footer from "../layout/footer";
+import Header from "../layout/Header";
+import { Link, useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  getBlogBySlug,
+  addComment,
+} from "../queryFunction/queryFunction";
+import { toast } from "react-toastify";
 
 const SingleBlog = () => {
-  const [isCopied, setIsCopied] = useState(false);
+  const { slug } = useParams();
+  const queryClient = useQueryClient();
+  const [commentText, setCommentText] = useState("");
 
-  const handleShare = (platform) => {
-    // In a real app, this would use the platform's sharing API
-    if (platform === 'copy') {
-      navigator.clipboard.writeText(window.location.href);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000);
-    }
-  };
+  const { data, isLoading } = useQuery({
+    queryKey: ["blog", slug],
+    queryFn: () => getBlogBySlug(slug),
+  });
 
-  const relatedPosts = [
-    {
-      title: "Asset Allocation Strategies",
-      category: "Investment",
-      readTime: "6 min read",
-      image: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+  const blog = data?.data;
+
+  const addCommentMutation = useMutation({
+    mutationFn: ({ blogId, comment }) => addComment(blogId, { comment }),
+
+    onSuccess: (res) => {
+      toast.success(res?.message || "Comment added successfully!");
+      queryClient.invalidateQueries(["blog", slug]);
+      setCommentText("");
     },
-    {
-      title: "Risk Management Fundamentals",
-      category: "Strategy",
-      readTime: "7 min read",
-      image: "https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+
+    onError: (error) => {
+      const backendMsg =
+        error?.response?.data?.message || "Something went wrong!";
+      toast.error(backendMsg);
     },
-    {
-      title: "Long-Term Investment Planning",
-      category: "Planning",
-      readTime: "9 min read",
-      image: "https://images.unsplash.com/photo-1579154204601-015dbf4aa745?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-    }
-  ];
+  });
+
+  if (isLoading) {
+    return <div className="text-center text-white py-20">Loading...</div>;
+  }
 
   return (
     <>
-    <Header/>
-    <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] py-16 sm:px-6 lg:px-8  ">
-      <div className="max-w-6xl mx-auto">
-        {/* Back Button */}
-        <div className="mb-8">
-          <Link 
-            to="/blog" 
-            className="inline-flex items-center justify-center rounded-full px-4 py-2 bg-[#F9C74F] hover:bg-[#F9844A] transition-colors duration-300"
-          >
-            <FaArrowLeft className="transform -translate-x-1 transition-transform" />
-          </Link>
-        </div>
+      <Header />
 
-        {/* Article Header */}
-        <header className="mb-12">
-        
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mb-6 leading-tight">
-            The Art of Diversification
+      <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] py-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="mb-6">
+            <Link
+              to="/blogs"
+              className="inline-flex items-center px-4 py-2 bg-[#F9C74F] rounded-full"
+            >
+              <FaArrowLeft />
+            </Link>
+          </div>
+
+          <h1 className="text-4xl text-white font-bold mb-2">
+            {blog?.title}
           </h1>
-          
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-[#F8FAFC]/70">
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] rounded-full"></div>
-                <span className="font-medium">John Doe</span>
-              </div>
-              <span className="hidden sm:block">•</span>
-              <span>Published on August 24, 2023</span>
-            </div>
-            <div className="flex items-center gap-4 text-sm">
-              <span>8 min read</span>
-              <span>•</span>
-              <span>1,248 views</span>
-            </div>
-          </div>
-        </header>
 
-        {/* Featured Image */}
-        <div className="mb-12 rounded-2xl overflow-hidden">
-          <div 
-            className="w-full h-64 md:h-80 bg-cover bg-center"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1559526324-4b87b5e36e44?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"
-            }}
-          ></div>
-        </div>
+          <p className="text-gray-400 mb-6">
+            {blog?.author} • {new Date(blog?.createdAt).toDateString()}
+          </p>
 
-        {/* Article Content */}
-        <article className="prose prose-lg prose-invert max-w-none mb-16">
-          <div className="text-[#F8FAFC]/80 leading-relaxed space-y-6">
-            <p className="text-xl font-light leading-relaxed">
-              Diversification is a core principle of investing, yet it's often misunderstood. It's not just about owning a lot of different stocks. True diversification means spreading your investments across various asset classes, industries, and geographic regions. This strategy helps to mitigate risk, as a downturn in one area is less likely to have a catastrophic impact on your entire portfolio.
-            </p>
+          <img
+            src={blog?.coverImage}
+            className="w-full rounded-xl mb-10"
+            alt="cover"
+          />
 
-            <h2 className="text-3xl font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mt-12 mb-6">
-              Why Diversity?
-            </h2>
+          <h2 className="text-white text-3xl font-bold">Description</h2>
+          <article
+            className="prose prose-invert mb-14 text-white"
+            dangerouslySetInnerHTML={{ __html: blog?.description }}
+          />
 
-            <p>
-              The primary reason to diversify is to manage risk. No single investment performs well all the time. By holding a mix of assets, you can smooth out returns and protect yourself from the volatility of any single investment. For example, when stocks are down, bonds might be up, and vice versa. This balancing act is what makes diversification so powerful.
-            </p>
+          <h2 className="text-3xl font-bold text-white mb-6">Comments</h2>
 
-            {/* Quote */}
-            <blockquote className="border-l-4 border-[#F9C74F] pl-6 py-2 my-8 bg-[#0B1F3A]/50 rounded-r-lg">
-              <p className="text-xl italic text-[#F8FAFC] font-['Playfair_Display',serif]">
-                "The only investors who shouldn't diversify are those who are right 100% of the time."
-              </p>
-              <footer className="mt-4 text-[#F9C74F] font-semibold">
-                — John Templeton
-              </footer>
-            </blockquote>
+          <div className="bg-white/5 p-6 rounded-xl mb-10">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
 
-            <h2 className="text-3xl font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mt-12 mb-6">
-              How to Build a Diversified Portfolio
-            </h2>
+                addCommentMutation.mutate({
+                  blogId: blog._id,
+                  comment: commentText,
+                });
+              }}
+            >
+              <textarea
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+                className="w-full bg-transparent border border-white/20 p-3 rounded-xl text-white"
+                rows={4}
+                placeholder="Write your comment..."
+              ></textarea>
 
-            <p>
-              Building a diversified portfolio involves several key steps:
-            </p>
-
-            <div className="space-y-6 my-8">
-              <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-[#F9C74F] mb-3">Asset Allocation</h3>
-                <p className="text-[#F8FAFC]/80">
-                  Determine the right mix of stocks, bonds, and other assets based on your risk tolerance and financial goals.
-                </p>
-              </div>
-
-              <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-[#F9C74F] mb-3">Geographic Diversification</h3>
-                <p className="text-[#F8FAFC]/80">
-                  Invest in both domestic and international markets to reduce country-specific risk.
-                </p>
-              </div>
-
-              <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-[#F9C74F] mb-3">Sector Diversification</h3>
-                <p className="text-[#F8FAFC]/80">
-                  Spread your investments across different industries to avoid over-exposure to a single sector.
-                </p>
-              </div>
-
-              <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
-                <h3 className="text-xl font-bold text-[#F9C74F] mb-3">Regular Rebalancing</h3>
-                <p className="text-[#F8FAFC]/80">
-                  Periodically review and adjust your portfolio to maintain your desired asset allocation.
-                </p>
-              </div>
-            </div>
-
-            <p>
-              Remember, diversification doesn't guarantee profits or protect against all losses. However, it is a proven strategy for managing risk and achieving more consistent long-term returns. At Placerly, we can help you build a personalized, diversified portfolio tailored to your unique financial situation.
-            </p>
-          </div>
-        </article>
-
-        {/* Share Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 py-8 border-t border-b border-[#F8FAFC]/10 mb-16">
-          <div className="text-[#F8FAFC] font-semibold">
-            Share this article:
-          </div>
-          <div className="flex items-center gap-4">
-            {[
-              { icon: '💬', label: 'Twitter', platform: 'twitter' },
-              { icon: '💬', label: 'LinkedIn', platform: 'linkedin' },
-              { icon: '✅️', label: 'Copy', platform: 'copy' }
-            ].map((social) => (
               <button
-                key={social.platform}
-                onClick={() => handleShare(social.platform)}
-                className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-[#F8FAFC]/10 rounded-lg text-[#F8FAFC] hover:bg-[#F9C74F] hover:text-[#0B1F3A] transition-all duration-300 hover:scale-105"
+                type="submit"
+                className="mt-4 px-6 py-3 bg-[#F9C74F] text-black rounded-xl"
               >
-                <span>{social.icon}</span>
-                <span>{social.label}</span>
-                {social.platform === 'copy' && isCopied && (
-                  <span className="text-xs text-[#F9C74F]">Copied!</span>
-                )}
+                Submit Comment
               </button>
-            ))}
+            </form>
           </div>
-        </div>
 
-        {/* Author Bio */}
-        <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-2xl p-8 mb-16">
-          <div className="flex flex-col md:flex-row gap-6 items-start">
-            <div className="w-20 h-20 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] rounded-full flex-shrink-0"></div>
-            <div>
-              <h3 className="text-xl font-bold text-[#F8FAFC] mb-2">John Doe</h3>
-              <p className="text-[#F9C74F] font-semibold mb-4">Senior Investment Strategist</p>
-              <p className="text-[#F8FAFC]/70 leading-relaxed">
-                John has over 15 years of experience in portfolio management and investment strategy. 
-                He specializes in helping clients build diversified portfolios that align with their long-term financial goals.
-              </p>
-            </div>
-          </div>
-        </div>
+          {/* Show Comments */}
+          <div className="space-y-4 ">
+            {blog?.comments?.length === 0 ? (
+              <p className="text-gray-400">No comments yet.</p>
+            ) : (
+              blog?.comments?.map((comment) => (
+                <div
+                  key={comment._id}
+                  className="bg-white/5 p-5 rounded-xl border border-white/10"
+                >
+                  <div className="flex justify-between mb-2">
+                    <h4 className="text-[#F9C74F] font-semibold">
+                      {comment.name || "Anonymous"}
+                    </h4>
+                    <span className="text-xs text-gray-400">
+                      {new Date(comment.createdAt).toLocaleString()}
+                    </span>
+                  </div>
 
-        {/* Related Articles */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mb-8">
-            Related Articles
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {relatedPosts.map((post, index) => (
-              <Link key={index} to={`/blog/${post.slug}`} className="group bg-white/5 border border-[#F8FAFC]/10 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-[#F9C74F]/10 transition-all duration-300">
-                <div 
-                  className="w-full h-32 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${post.image})` }}
-                ></div>
-                <div className="p-4">
-                  <span className="inline-block px-2 py-1 bg-[#F9C74F] text-[#0B1F3A] text-xs font-bold rounded mb-2">
-                    {post.category}
-                  </span>
-                  <h3 className="text-[#F8FAFC] font-semibold mb-2 group-hover:text-[#F9C74F] transition-colors">
-                    {post.title}
-                  </h3>
-                  <p className="text-[#F8FAFC]/60 text-xs">{post.readTime}</p>
+                  <p className="text-gray-200">{comment.comment}</p>
                 </div>
-              </Link>
-            ))}
+              ))
+            )}
           </div>
-        </section>
-
-       
+        </div>
       </div>
-    </div>
-    <Footer/>
+
+      <Footer />
     </>
   );
 };

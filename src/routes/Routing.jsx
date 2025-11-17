@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import WealthSpinner from "../components/Spinner";
+import ProtectedSubscription from "./ProtectedSubscription";
+
 
 
 const LandingPage = lazy(() => import("../pages/LandingPage"));
@@ -29,6 +31,7 @@ const PaymentSuccess = lazy(() => import("../pages/PaymentSuccess"));
 const PaymentFailed = lazy(() => import("../pages/PaymentFailed"));
 const InvitePage = lazy(() => import("../pages/InvitePage"));
 const Services = lazy(() => import("../pages/Services"));
+const SingleService = lazy(() => import("../pages/SingleService"));
 
 
 
@@ -40,29 +43,32 @@ const Routing = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/blogs" element={<Blog />} />
-          <Route path="/blog/:id" element={<SingleBlog />} />
+          <Route path="/blog/:slug" element={<SingleBlog />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/services" element={<Services />} />
+          <Route path="/services/:slug" element={<SingleService />} />
           <Route path="/checkout/:id" element={<Checkout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
           <Route path="/executor/invite/:token" element={<InvitePage />} />
           <Route path="/faq" element={<FAQ />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/profile" element={<Profile />} />
-          <Route path="/dashboard/executors" element={<Executors />} />
-          <Route path="/dashboard/debts" element={<Debts />} />
-          <Route path="/dashboard/insurance" element={<Insurance />} />
-          <Route path="/dashboard/utilities" element={<Utilities />} />
-          <Route path="/dashboard/assets" element={<AssetsPage />} />
-          <Route path="/dashboard/investments" element={<Investments />} />
-          <Route path="/dashboard/banking" element={<Banking />} />
-          <Route path="/dashboard/calendar" element={<Calendar />} />
-          <Route path="/dashboard/test" element={<Test />} />
+          <Route element={<ProtectedSubscription />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard/profile" element={<Profile />} />
+            <Route path="/dashboard/executors" element={<Executors />} />
+            <Route path="/dashboard/debts" element={<Debts />} />
+            <Route path="/dashboard/insurance" element={<Insurance />} />
+            <Route path="/dashboard/utilities" element={<Utilities />} />
+            <Route path="/dashboard/assets" element={<AssetsPage />} />
+            <Route path="/dashboard/investments" element={<Investments />} />
+            <Route path="/dashboard/banking" element={<Banking />} />
+            <Route path="/dashboard/calendar" element={<Calendar />} />
+            <Route path="/dashboard/test" element={<Test />} />
+          </Route>
         </Routes>
       </Suspense>
     </BrowserRouter>
