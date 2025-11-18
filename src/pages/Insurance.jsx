@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DashboardLayout from "../layout/sidebar";
+
 import DataTable from "react-data-table-component";
 import { FiEdit, FiTrash2, FiX } from "react-icons/fi";
 import { toast } from "react-toastify";
@@ -14,6 +14,7 @@ import {
   updateInsurance,
   deleteInsurance,
 } from "../queryFunction/queryFunction";
+import DashboardLayout from "../layout/Sidebar";
 
 const InsurancePage = () => {
   const queryClient = useQueryClient();
@@ -162,10 +163,10 @@ const InsurancePage = () => {
       cell: (row) => (
         <div className="flex gap-3">
           <button onClick={() => openModal(row)}>
-            <FiEdit className="text-yellow-400 hover:text-yellow-300" />
+            <FiEdit className="text-yellow-400 hover:text-yellow-300 cursor-pointer" />
           </button>
           <button onClick={() => handleDelete(row.id ?? row._id)}>
-            <FiTrash2 className="text-red-400 hover:text-red-300" />
+            <FiTrash2 className="text-red-400 hover:text-red-300 cursor-pointer" />
           </button>
         </div>
       ),
@@ -219,7 +220,7 @@ const InsurancePage = () => {
           </div>
           <button
             onClick={() => openModal()}
-            className="px-6 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-all"
+            className="cursor-pointer px-6 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-all"
           >
             + Add Insurance
           </button>
@@ -345,7 +346,7 @@ const InsurancePage = () => {
                   <button
                     type="submit"
                     disabled={isCreating || isUpdating}
-                    className="flex-1 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg"
+                    className=" cursor-pointer flex-1 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg"
                   >
                     {editMode
                       ? isUpdating
@@ -358,7 +359,7 @@ const InsurancePage = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-4 py-2 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg"
+                    className="cursor-pointer px-4 py-2 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg"
                   >
                     Cancel
                   </button>

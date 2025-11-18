@@ -16,6 +16,7 @@ import {
   FiBox,
   FiUser,
   FiCalendar,
+  FiHome,
 } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
 import { profile } from '../queryFunction/queryFunction';
@@ -52,6 +53,8 @@ const DashboardLayout = ({ children }) => {
     { name: 'Banking', icon: <FiCreditCard />, path: '/dashboard/banking' },
     { name: 'Calendar', icon: <FiCalendar />, path: '/dashboard/calendar' },
     { name: 'Profile', icon: <FiUser />, path: '/dashboard/profile' },
+    { name: 'Home', icon: <FiHome />, path: '/' },
+    
   ];
 
   return (
@@ -81,8 +84,8 @@ const DashboardLayout = ({ children }) => {
                 <li>
                   <button
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${path === item.path
-                      ? 'bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-semibold'
-                      : 'text-[#F8FAFC]/70 hover:text-[#F8FAFC] hover:bg-white/5'
+                      ? 'bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-semibold cursor-pointer'
+                      : 'text-[#F8FAFC]/70 hover:text-[#F8FAFC] hover:bg-white/5 cursor-pointer'
                       }`}
                   >
                     <span className="text-lg">{item.icon}</span>
@@ -126,12 +129,12 @@ const DashboardLayout = ({ children }) => {
     "
           >
             <Link to="/dashboard/profile">
-              <button className="w-full text-left text-[#F8FAFC] px-3 py-2 rounded-lg hover:bg-[#1A2C4A] text-sm">
+              <button className="w-full text-left text-[#F8FAFC] px-3 py-2 rounded-lg hover:bg-[#1A2C4A] text-sm cursor-pointer">
                 Profile
               </button>
             </Link>
 
-            <button className="w-full text-left text-red-400 px-3 py-2 rounded-lg hover:bg-red-500/20 text-sm
+            <button className="w-full text-left text-red-400 px-3 py-2 rounded-lg hover:bg-red-500/20 text-sm cursor-pointer
             "
               onClick={handleLogout}
             >
@@ -152,7 +155,7 @@ const DashboardLayout = ({ children }) => {
             >
               <FiMenu className="w-5 h-5" />
             </button>
-            <h2 className="text-xl font-['Playfair_Display',serif] font-bold">
+            <h2 className="text-xl font-['Playfair_Display',serif] font-bold cursor-pointer">
               Dashboard
             </h2>
           </div>
@@ -186,30 +189,26 @@ const DashboardLayout = ({ children }) => {
               © 2025 Placerly. All rights reserved.
             </div>
             <div className="flex items-center gap-6 text-sm">
-              <a
-                href="#"
-                className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors"
-              >
-                About Us
-              </a>
-              <a
-                href="#"
-                className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors"
-              >
-                Contact
-              </a>
-              <a
-                href="#"
-                className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors"
-              >
-                Privacy
-              </a>
-              <a
-                href="#"
-                className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors"
-              >
-                Terms
-              </a>
+              <Link to="/about">
+                <a className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors">
+                  About Us
+                </a>
+              </Link>
+              <Link to="/contact">
+                <a className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors">
+                  Contact
+                </a>
+              </Link>
+              <Link to="/privacy">
+                <a className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors">
+                  Privacy
+                </a>
+              </Link>
+              <Link to="/terms">
+                <a className="text-[#F8FAFC]/60 hover:text-[#F8FAFC] transition-colors">
+                  Terms
+                </a>
+              </Link>
             </div>
           </div>
         </footer>

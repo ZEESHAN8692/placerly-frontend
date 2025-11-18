@@ -1,9 +1,10 @@
-import React from 'react';
-import Footer from '../layout/footer';
+import React, { useState } from 'react';
+
 import Header from '../layout/Header';
 import { Link } from 'react-router-dom';
 import { useQuery } from "@tanstack/react-query";
 import { getBlog } from '../queryFunction/queryFunction';
+import Footer from '../layout/Footer';
 
 const Blog = () => {
   const { data, isLoading, isError } = useQuery({
@@ -11,25 +12,29 @@ const Blog = () => {
     queryFn: getBlog,
   });
 
-  console.log("Blogs :", data);
+  // Pagination States
+  const [currentPage, setCurrentPage] = useState(1);
+  const blogsPerPage = 6;
 
   const categories = ["All", "Investment", "Retirement", "Markets", "Planning", "Sustainable", "Tax"];
 
   if (isLoading) {
-    return (
-      <div className="text-center mt-20 text-white text-xl">
-        Loading...
-      </div>
-    );
+    return <div className="text-center mt-20 text-white text-xl">Loading...</div>;
   }
 
   if (isError) {
-    return (
-      <div className="text-center mt-20 text-red-500 text-xl">
-        Failed to load blogs
-      </div>
-    );
+    return <div className="text-center mt-20 text-red-500 text-xl">Failed to load blogs</div>;
   }
+
+  // Blogs array
+  const blogs = data?.data || [];
+
+  // Pagination Calculations
+  const indexOfLastBlog = currentPage * blogsPerPage;
+  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+  const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
+
+  const totalPages = Math.ceil(blogs.length / blogsPerPage);
 
   return (
     <>
@@ -38,7 +43,7 @@ const Blog = () => {
       <div className="min-h-screen bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
 
-          {/* Header Section */}
+          {/* Header */}
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 text-[#F9C74F] text-sm font-semibold mb-4">
               <div className="w-2 h-2 bg-[#F9C74F] rounded-full"></div>
@@ -70,10 +75,9 @@ const Blog = () => {
             ))}
           </div>
 
-          {/* Blog Listing from API */}
+          {/* Blogs */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-
-            {data?.data?.map((post, index) => (
+            {currentBlogs.map((post) => (
               <Link to={`/blog/${post.slug}`} key={post.slug}>
                 <article
                   className="group bg-gradient-to-b from-[#0B1F3A] to-[#08101D] border border-[#F8FAFC]/10 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-[#F9C74F]/10 transition-all duration-500 hover:-translate-y-2"
@@ -118,6 +122,42 @@ const Blog = () => {
                 </article>
               </Link>
             ))}
+          </div>
+
+          {/* PAGINATION UI */}
+          <div className="flex justify-center items-center gap-3 mt-10">
+            {/* Prev */}
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 rounded-lg text-sm text-[#F8FAFC] bg-white/10 border border-white/10 hover:bg-white/20 disabled:opacity-30"
+            >
+              Prev
+            </button>
+
+            {/* Page Numbers */}
+            {[...Array(totalPages).keys()].map((num) => (
+              <button
+                key={num}
+                onClick={() => setCurrentPage(num + 1)}
+                className={`px-4 py-2 rounded-lg text-sm font-semibold ${
+                  currentPage === num + 1
+                    ? "bg-[#F9C74F] text-[#0B1F3A]"
+                    : "bg-white/5 text-[#F8FAFC] hover:bg-white/10 border border-white/10"
+                }`}
+              >
+                {num + 1}
+              </button>
+            ))}
+
+            {/* Next */}
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 rounded-lg text-sm text-[#F8FAFC] bg-white/10 border border-white/10 hover:bg-white/20 disabled:opacity-30"
+            >
+              Next
+            </button>
           </div>
 
         </div>

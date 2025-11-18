@@ -56,7 +56,7 @@ const Header = () => {
         <nav className="hidden md:flex gap-12">
           {[
             { name: 'Home', path: '/' },
-            { name: 'How It Works', path: '#how-it-works' },
+            { name: 'How It Works', path: '/how-it-works' },
             { name: 'About', path: '/about' },
             { name: 'Pricing', path: '/pricing' },
             { name: 'Blogs', path: '/blogs' },
@@ -126,7 +126,7 @@ const Header = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden flex flex-col items-center justify-center w-8 h-8 relative"
+          className="md:hidden flex flex-col items-center justify-center w-8 h-8 relative cursor-pointer"
           onClick={toggleSidebar}
         >
           <span
@@ -159,7 +159,7 @@ const Header = () => {
             </h2>
             <button
               onClick={closeSidebar}
-              className="w-8 h-8 flex items-center justify-center text-[#F8FAFC] hover:text-[#F9C74F] transition-colors"
+              className="w-8 h-8 flex items-center justify-center text-[#F8FAFC] hover:text-[#F9C74F] transition-colors cursor-pointer"
             >
               <svg
                 className="w-5 h-5"
@@ -198,7 +198,7 @@ const Header = () => {
               {!isLoggedIn ? (
                 <>
                   <button
-                    className="w-full h-12 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg font-bold text-sm hover:bg-[#F8FAFC] hover:text-[#0B1F3A] transition-all duration-300"
+                    className="w-full h-12 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg font-bold text-sm hover:bg-[#F8FAFC] hover:text-[#0B1F3A] transition-all duration-300 cursor-pointer"
                     onClick={() => {
                       closeSidebar()
                       navigate('/login')
@@ -207,7 +207,7 @@ const Header = () => {
                     Login
                   </button>
                   <button
-                    className="w-full h-12 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-lg font-bold text-sm hover:shadow-xl hover:shadow-[#F9C74F]/30 transition-all duration-300"
+                    className="w-full h-12 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-lg font-bold text-sm hover:shadow-xl hover:shadow-[#F9C74F]/30 transition-all duration-300 cursor-pointer"
                     onClick={() => {
                       closeSidebar()
                       navigate('/signup')
@@ -219,7 +219,7 @@ const Header = () => {
               ) : (
                 <>
                   <button
-                    className="w-full h-12 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg font-bold text-sm hover:bg-[#F8FAFC] hover:text-[#0B1F3A] transition-all duration-300"
+                    className="w-full h-12 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg font-bold text-sm hover:bg-[#F8FAFC] hover:text-[#0B1F3A] transition-all duration-300 cursor-pointer"
                     onClick={() => {
                       closeSidebar()
                       navigate('/profile')
@@ -228,7 +228,7 @@ const Header = () => {
                     Profile
                   </button>
                   <button
-                    className="w-full h-12 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-lg font-bold text-sm hover:shadow-xl hover:shadow-[#F9C74F]/30 transition-all duration-300"
+                    className="w-full h-12 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-lg font-bold text-sm hover:shadow-xl hover:shadow-[#F9C74F]/30 transition-all duration-300 cursor-pointer"
                     onClick={() => {
                       closeSidebar()
                       handleLogout()

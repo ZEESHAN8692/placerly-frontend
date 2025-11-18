@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import Footer from "../layout/footer";
 import Header from "../layout/Header";
-import { toast } from "react-toastify";
-import { Car } from "lucide-react";
 import Carousel from "../components/Carousel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ContactUsComp from "../components/ContactUsComp";
+import Footer from "../layout/Footer";
+import LatestBlogs from "../components/LatestBlogs";
 
 const LandingPage = () => {
-  // toast.success("Welcome to Wealthify!");
+  const navigate = useNavigate()
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -20,14 +19,14 @@ const LandingPage = () => {
       <div className="flex flex-col min-h-screen">
         <Header/>
         <Carousel/>
-        {/* Enhanced Hero Section */}
+
         <main className="flex flex-col gap-20 md:gap-32">
           <section
             className={`relative flex flex-col items-center justify-center text-center min-h-screen p-4 transition-all duration-1000 ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
             }`}
           >
-            {/* Animated Background Elements */}
+
             <div className="absolute inset-0 overflow-hidden">
               <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-[#F9C74F]/10 rounded-full blur-3xl animate-pulse"></div>
               <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#F9844A]/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
@@ -36,7 +35,7 @@ const LandingPage = () => {
 
             <div className="relative z-10 flex flex-col gap-8 max-w-4xl">
               <h1 className="text-[#F8FAFC] text-5xl md:text-8xl font-['Playfair_Display',serif] font-black leading-tight tracking-tight">
-                One Place For Your{" "}
+                One Place For Your
                 <span className="bg-gradient-to-r from-[#F9C74F] via-[#F9844A] to-[#43AA8B] bg-clip-text text-transparent">
                   Wealth
                 </span>
@@ -45,22 +44,22 @@ const LandingPage = () => {
                 A modern-classic wealth management platform that transforms how you grow and protect your financial future.
               </p>
               <div className="flex flex-wrap justify-center gap-6 mt-8">
-                <Link to="/pricing">
-                  <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300 group">
+                <Link to="/pricing" >
+                  <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300 group  cursor-pointer">
                     <span className="flex items-center gap-2">
                       Get Started
                       <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </span>
                   </button>
                 </Link>
-                <Link to="/demo">
-                  <button className="h-14 px-8 bg-white/10 backdrop-blur-sm border border-white/20 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/20 hover:shadow-2xl hover:shadow-white/20 hover:scale-105 transition-all duration-300">
+                <Link to="/demo" >
+                  <button className="h-14 px-8 bg-white/10 backdrop-blur-sm border border-white/20 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/20 hover:shadow-2xl hover:shadow-white/20 hover:scale-105 transition-all duration-300 cursor-pointer">
                     Watch Demo
                   </button>
                 </Link>
               </div>
               
-              {/* Trust Indicators */}
+
               <div className="flex flex-wrap justify-center gap-12 mt-16 pt-8 border-t border-[#F8FAFC]/10">
                 {["10K+", "99%", "4.9/5"].map((stat, i) => (
                   <div key={i} className="text-center">
@@ -74,8 +73,8 @@ const LandingPage = () => {
             </div>
           </section>
         
-          {/* Enhanced How It Works */}
-          <section className="px-6 md:px-20">
+
+          <section className="px-6 md:px-20 " id="#how-it-works">
             <h2 className="text-center text-5xl font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mb-20">
               How It <span className="text-[#F9C74F]">Works</span>
             </h2>
@@ -114,7 +113,6 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* Enhanced About Section */}
           <section className="px-6 md:px-20 py-24 grid md:grid-cols-2 gap-16 items-center">
             <div className="flex flex-col gap-6">
               <div className="inline-flex items-center gap-2 text-[#F9C74F] text-sm font-semibold mb-2">
@@ -130,10 +128,14 @@ const LandingPage = () => {
                 that empowers you to take control of your financial future with confidence.
               </p>
               <div className="flex gap-4 mt-4">
-                <button className="h-12 px-6 bg-[#F9C74F] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-transform">
+                <button className="h-12 px-6 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-transform cursor-pointer"
+                onClick={()=> navigate("/contact")}
+                >
                   Learn More
                 </button>
-                <button className="h-12 px-6 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg hover:bg-white/10 transition-all">
+                <button className="h-12 px-6 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg hover:bg-white/10 transition-all cursor-pointer"
+                onClick={()=> navigate("/contact")}
+                >
                   Meet the Team
                 </button>
               </div>
@@ -153,8 +155,7 @@ const LandingPage = () => {
               <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-[#F9844A]/10 rounded-2xl backdrop-blur-sm border border-[#F9844A]/20"></div>
             </div>
           </section>
-
-          {/* Enhanced Blog Section */}
+{/* 
           <section className="px-6 md:px-20 py-24 bg-gradient-to-b from-[#0B1F3A] to-[#08101D]">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-16">
@@ -219,10 +220,11 @@ const LandingPage = () => {
                 ))}
               </div>
             </div>
-          </section>
+          </section> */}
+          <LatestBlogs/>
           <ContactUsComp/>
-          {/* Enhanced FAQ */}
-          <section className="px-6 md:px-20 py-24">
+
+          <section className="px-6 md:px-20 ">
             <div className="max-w-4xl mx-auto">
               <h2 className="text-5xl text-center font-['Playfair_Display',serif] font-bold text-[#F8FAFC] mb-4">
                 Frequently Asked <span className="text-[#F9C74F]">Questions</span>
@@ -264,7 +266,7 @@ const LandingPage = () => {
             </div>
           </section>
 
-          {/* CTA Section */}
+
           <section className="px-6 md:px-20 py-24">
             <div className="max-w-4xl mx-auto text-center">
               <div className="bg-gradient-to-br from-[#F9C74F]/10 to-[#F9844A]/10 border border-[#F9C74F]/20 rounded-3xl p-12 backdrop-blur-sm">
@@ -276,12 +278,12 @@ const LandingPage = () => {
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
                   <Link to="/pricing">
-                    <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300">
+                    <button className="h-14 px-8 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold text-lg rounded-xl hover:shadow-2xl hover:shadow-[#F9C74F]/40 hover:scale-105 transition-all duration-300  cursor-pointer">
                       Start Free Trial
                     </button>
                   </Link>
                   <Link to="/pricing">
-                    <button className="h-14 px-8 border border-[#F8FAFC]/30 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/10 hover:scale-105 transition-all duration-300">
+                    <button className="h-14 px-8 border border-[#F8FAFC]/30 text-[#F8FAFC] font-bold text-lg rounded-xl hover:bg-white/10 hover:scale-105 transition-all duration-300 cursor-pointer">
                       Schedule a Demo
                     </button>
                   </Link>

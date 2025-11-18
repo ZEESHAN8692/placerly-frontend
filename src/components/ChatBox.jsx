@@ -77,7 +77,7 @@ const ChatBox = () => {
       <div className="pointer-events-auto z-[9999] fixed bottom-6 right-6">
         <button
           onClick={toggleChat}
-          className="bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300"
+          className=" cursor-pointer bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform duration-300"
         >
           <MessageCircle className="w-8 h-8" />
         </button>
@@ -108,10 +108,10 @@ const ChatBox = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <button onClick={toggleMinimize} className="p-2 hover:bg-white/10 rounded-lg">
+              <button onClick={toggleMinimize} className="p-2 hover:bg-white/10 rounded-lg cursor-pointer">
                 <Minimize2 className="w-4 h-4 text-gray-300" />
               </button>
-              <button onClick={toggleChat} className="p-2 hover:bg-white/10 rounded-lg">
+              <button onClick={toggleChat} className="p-2 hover:bg-white/10 rounded-lg cursor-pointer">
                 <X className="w-4 h-4 text-gray-300" />
               </button>
             </div>
@@ -160,7 +160,7 @@ const ChatBox = () => {
                 <button
                   type="submit"
                   disabled={!msg.trim()}
-                  className="px-6 py-3 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-xl font-semibold"
+                  className=" cursor-pointer px-6 py-3 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] rounded-xl font-semibold"
                 >
                   <Send className="w-4 h-4" />
                 </button>

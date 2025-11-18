@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import DashboardLayout from '../layout/sidebar';
+
 import DataTable from 'react-data-table-component';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createAsset, getAssets, updateAsset, deleteAsset } from '../queryFunction/queryFunction';
 import { toast } from 'react-toastify';
 import { FiEdit, FiTrash2, FiX } from 'react-icons/fi';
+import DashboardLayout from '../layout/Sidebar';
 
 const AssetsPage = () => {
   const queryClient = useQueryClient();
@@ -122,10 +123,10 @@ const AssetsPage = () => {
       cell: (row) => (
         <div className="flex gap-3">
           <button onClick={() => openModal(row)}>
-            <FiEdit className="text-yellow-400 hover:text-yellow-300" />
+            <FiEdit className="text-yellow-400 hover:text-yellow-300 cursor-pointer"  />
           </button>
           <button onClick={() => handleDelete(row.id ?? row._id)}>
-            <FiTrash2 className="text-red-400 hover:text-red-300" />
+            <FiTrash2 className="text-red-400 hover:text-red-300 cursor-pointer"  />
           </button>
         </div>
       ),
@@ -178,7 +179,7 @@ const AssetsPage = () => {
           </div>
           <button
             onClick={() => openModal()}
-            className="px-6 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-all"
+            className="cursor-pointer px-6 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg hover:scale-105 transition-all"
           >
             + Add Asset
           </button>
@@ -246,11 +247,11 @@ const AssetsPage = () => {
             <div className="bg-[#0B1F3A] border border-[#F8FAFC]/20 rounded-2xl p-6 w-full max-w-md relative">
               <button
                 onClick={closeModal}
-                className="absolute top-4 right-4 text-[#F8FAFC]/70 hover:text-white"
+                className="absolute top-4 right-4 text-[#F8FAFC]/70 hover:text-white cursor-pointer"
               >
                 <FiX size={20} />
               </button>
-              <h3 className="text-xl font-bold text-[#F8FAFC] mb-4">
+              <h3 className="text-xl font-bold text-[#F8FAFC] mb-4 ">
                 {editMode ? 'Edit Asset' : 'Add New Asset'}
               </h3>
 
@@ -295,7 +296,7 @@ const AssetsPage = () => {
                   <button
                     type="submit"
                     disabled={isCreating || isUpdating}
-                    className="flex-1 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg"
+                    className="cursor-pointer flex-1 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-[#0B1F3A] font-bold rounded-lg"
                   >
                     {editMode
                       ? isUpdating
@@ -308,7 +309,7 @@ const AssetsPage = () => {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-4 py-2 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg"
+                    className="px-4 py-2 border border-[#F8FAFC]/30 text-[#F8FAFC] rounded-lg cursor-pointer"
                   >
                     Cancel
                   </button>

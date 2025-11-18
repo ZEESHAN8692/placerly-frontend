@@ -9,8 +9,10 @@ const ProtectedSubscription = () => {
   const token = Cookies.get("token");
   const [loading, setLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isExecutor , setIsExecutor] = useState(false); 
 
   useEffect(() => {
+
     if (!token) {
       setLoading(false);
       return;
@@ -19,14 +21,14 @@ const ProtectedSubscription = () => {
     const checkSubscription = async () => {
       try {
         const res = await axiosInstance.get(profile_end);
-
+          
         console.log("Subscription Status:", res.data.subscription?.status);
 
         setIsSubscribed(res.data.subscription?.status === "active");
       } catch (error) {
         console.log("Subscription check error:", error);
       } finally {
-        setLoading(false);   // <<--- MOST IMPORTANT
+        setLoading(false); 
       }
     };
 

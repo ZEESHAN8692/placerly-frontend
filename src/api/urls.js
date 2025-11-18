@@ -81,6 +81,10 @@ const add_comment_end = "api/add-comment"
 const delete_comment_end = "api/delete-comment"
 const get_comments_end = "api/get-comments"
 
+// Banner
+const get_banner_end = "api/banners"
+
+
 
 
 export {
@@ -139,6 +143,7 @@ export {
     get_blog_end,
     add_comment_end,
     delete_comment_end,
-    get_comments_end
+    get_comments_end,
+    get_banner_end
 
 }

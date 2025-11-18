@@ -6,6 +6,8 @@ import UserChat from "../pages/Chat";
 
 
 
+
+
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Blog = lazy(() => import("../pages/Blog"));
 const SingleBlog = lazy(() => import("../pages/SingleBlag"));
@@ -33,6 +35,9 @@ const PaymentFailed = lazy(() => import("../pages/PaymentFailed"));
 const InvitePage = lazy(() => import("../pages/InvitePage"));
 const Services = lazy(() => import("../pages/Services"));
 const SingleService = lazy(() => import("../pages/SingleService"));
+const HowItWorks = lazy(() => import("../pages/HowItWorks"));
+const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
+const TermsAndConditions = lazy(() => import("../pages/TermAndConditions"));
 
 
 
@@ -44,6 +49,9 @@ const Routing = () => {
           <Route path="*" element={<NotFound />} />
           <Route path="/chat" element={<UserChat />} />
           <Route path="/" element={<LandingPage />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/blogs" element={<Blog />} />
           <Route path="/blog/:slug" element={<SingleBlog />} />
           <Route path="/signup" element={<Signup />} />

@@ -1,5 +1,5 @@
 import axiosInstance from "../api/axiosInstance"
-import { add_comment_end, create_asset_end, create_bankings_end, create_debt_end, create_executors_end, create_insurance_end, create_investments_end, create_utilities_end, dashboard_end, delelte_executors_end, delete_asset_end, delete_bankings_end, delete_comment_end, delete_debt_end, delete_insurance_end, delete_investments_end, delete_utilities_end,  executors_end,  get_asset_by_id_end, get_assets_end, get_bankings_by_id_end, get_bankings_end,  get_blog_by_slug,  get_blog_end, get_comments_end, get_debt_by_id_end, get_debts_end, get_insurance_by_id_end, get_insurance_end, get_investments_by_id_end, get_investments_end, get_Pricing_by_id_end, get_Pricings_end, get_totle_assets_value_end, get_totle_bankings_value_end, get_totle_investments_value_end, get_utilities_by_id_end, get_utilities_end, login_end, profile_end, register_end, reset_password_end, update_asset_end, update_bankings_end, update_debt_end, update_insurance_end, update_investments_end, update_profile_end, update_utilities_end, verify_email_end } from "../api/urls"
+import { add_comment_end, create_asset_end, create_bankings_end, create_debt_end, create_executors_end, create_insurance_end, create_investments_end, create_utilities_end, dashboard_end, delelte_executors_end, delete_asset_end, delete_bankings_end, delete_comment_end, delete_debt_end, delete_insurance_end, delete_investments_end, delete_utilities_end,  executors_end,  get_asset_by_id_end, get_assets_end, get_bankings_by_id_end, get_bankings_end,  get_banner_end,  get_blog_by_slug,  get_blog_end, get_comments_end, get_debt_by_id_end, get_debts_end, get_insurance_by_id_end, get_insurance_end, get_investments_by_id_end, get_investments_end, get_Pricing_by_id_end, get_Pricings_end, get_totle_assets_value_end, get_totle_bankings_value_end, get_totle_investments_value_end, get_utilities_by_id_end, get_utilities_end, login_end, profile_end, register_end, reset_password_end, update_asset_end, update_bankings_end, update_debt_end, update_insurance_end, update_investments_end, update_profile_end, update_utilities_end, verify_email_end } from "../api/urls"
 
 export const login = async (data) => {
     try {
@@ -469,6 +469,18 @@ export const addComment = async (id, payload) => {
 export const deleteComment = async (id, commentId) => {
   try {
     const res = await axiosInstance.delete(`${delete_comment_end}/${id}/${commentId}`);
+    return res.data;
+  } catch (error) {
+    console.log("BLOG API ERROR:", error);
+    throw error;
+  }
+};
+
+// Banner
+
+export const getBanner = async () => {
+  try {
+    const res = await axiosInstance.get(get_banner_end);
     return res.data;
   } catch (error) {
     console.log("BLOG API ERROR:", error);

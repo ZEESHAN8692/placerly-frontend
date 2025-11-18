@@ -109,9 +109,9 @@ const PlacerlyLogin = () => {
                             {/* Submit */}
                             <button
                                 type="submit"
-                                className="w-full bg-gradient-to-r from-[#F9C74F] to-[#F9844A] hover:from-[#F9844A] hover:to-[#F9C74F] text-[#0B1F3A] font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-[#F9C74F]/30 transform hover:-translate-y-0.5 transition-all duration-300"
+                                className="w-full bg-gradient-to-r from-[#F9C74F] to-[#F9844A] hover:from-[#F9844A] hover:to-[#F9C74F] text-[#0B1F3A] font-semibold py-3 px-4 rounded-lg shadow-lg hover:shadow-[#F9C74F]/30 transform hover:-translate-y-0.5 transition-all duration-300 cursor-pointer"
                             >
-                                Log In
+                                {isLoading ? 'Logging In...' : 'Log In'}
                             </button>
                         </form>
 

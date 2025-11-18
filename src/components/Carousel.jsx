@@ -4,11 +4,13 @@ import { motion } from "framer-motion";
 // Correct Swiper v11+ imports
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import {useQuery} from "@tanstack/react-query"
 
 // Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { getBanner } from "../queryFunction/queryFunction";
 
 const slidesData = [
   {
@@ -42,6 +44,15 @@ const slidesData = [
 ];
 
 const Carousel = ({ slides = slidesData }) => {
+
+  const {data, isLoading , isError} = useQuery({
+    queryKey: ['slides'],
+    queryFn: getBanner
+  })
+
+  console.log("data",data)
+
+
   return (
     <div className="w-full  bg-gradient-to-br from-[#0B1F3A] via-[#0A1526] to-[#08101D] flex items-center justify-center px-4 py-10">
       <div className="w-full max-w-7xl">
@@ -54,7 +65,7 @@ const Carousel = ({ slides = slidesData }) => {
           navigation={true}
           className="rounded-2xl overflow-hidden shadow-xl"
         >
-          {slides.map((slide, index) => (
+          {data?.map((slide, index) => (
             <SwiperSlide key={index}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

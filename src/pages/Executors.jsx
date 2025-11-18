@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../layout/sidebar';
+
 import { createExecuter, getExecuters, deleteExecuter } from '../queryFunction/queryFunction';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { FiTrash2 } from 'react-icons/fi';
+import DashboardLayout from '../layout/Sidebar';
 
 const Executors = () => {
 
@@ -71,7 +72,7 @@ const Executors = () => {
               <h2 className="text-2xl font-bold text-white">Your Executors</h2>
               <button
                 onClick={() => setShowAddForm(true)}
-                className="px-4 py-2 bg-yellow-400 text-black font-bold rounded-lg"
+                className="px-4 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-black font-bold rounded-lg cursor-pointer"
               >
                 Add Executor
               </button>
@@ -161,7 +162,7 @@ const Executors = () => {
                   <div className="flex gap-3">
                     <button
                       type="submit"
-                      className="flex-1 py-2 bg-yellow-400 text-black font-bold rounded"
+                      className="flex-1 py-2 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-black font-bold rounded cursor-pointer"
                     >
                       {isCreating ? "Adding..." : "Add Executor"}
                     </button>
@@ -169,7 +170,7 @@ const Executors = () => {
                     <button
                       type="button"
                       onClick={() => setShowAddForm(false)}
-                      className="px-4 py-2 border border-white/30 text-white rounded"
+                      className="px-4 py-2 border border-white/30 text-white rounded cursor-pointer"
                     >
                       Cancel
                     </button>

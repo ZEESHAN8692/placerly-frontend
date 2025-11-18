@@ -11,7 +11,6 @@ const OtpVerificationModal = ({ isOpen, onClose, userId }) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const [success, setSuccess] = useState(false);
 
-  // ✅ OTP Input Handling
   const handleChange = (value, index) => {
     if (/^\d?$/.test(value)) {
       const newOtp = [...otp];
@@ -24,13 +23,13 @@ const OtpVerificationModal = ({ isOpen, onClose, userId }) => {
     }
   };
 
-  // ✅ Mutation (API Call)
+
   const { mutate, isLoading } = useMutation({
     mutationFn: verifyEmail,
     onSuccess: (data) => {
-      console.log("✅ OTP Success Response:", data);
+      console.log(" OTP Success Response:", data);
 
-      // Check for actual success keys from backend
+  
       if (
         data?.success === true ||
         data?.status === 200 ||
@@ -39,7 +38,7 @@ const OtpVerificationModal = ({ isOpen, onClose, userId }) => {
         setSuccess(true);
         toast.success("OTP Verified Successfully 🎉", { theme: "colored" });
 
-        // 🕒 2-second success animation, then redirect
+
         setTimeout(() => {
           setSuccess(false);
           onClose();
@@ -61,7 +60,6 @@ const OtpVerificationModal = ({ isOpen, onClose, userId }) => {
     },
   });
 
-  // ✅ OTP Verify button
   const handleVerify = () => {
     const code = otp.join("");
     if (code.length !== 6) {
@@ -74,7 +72,6 @@ const OtpVerificationModal = ({ isOpen, onClose, userId }) => {
 
   if (!isOpen) return null;
 
-  // ✅ UI Section
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
       <AnimatePresence>
@@ -134,21 +131,21 @@ const OtpVerificationModal = ({ isOpen, onClose, userId }) => {
               <button
                 onClick={handleVerify}
                 disabled={isLoading}
-                className="w-full bg-[#F9C74F] hover:bg-[#F9844A] text-[#0B1F3A] font-semibold py-3 rounded-lg transition duration-300 shadow-lg disabled:opacity-70"
+                className=" cursor-pointer w-full bg-[#F9C74F] hover:bg-[#F9844A] text-[#0B1F3A] font-semibold py-3 rounded-lg transition duration-300 shadow-lg disabled:opacity-70"
               >
                 {isLoading ? "Verifying..." : "Verify"}
               </button>
 
               <p className="text-sm text-[#F8FAFC]/60 mt-4">
                 Didn’t receive the code?{" "}
-                <button className="text-[#F9C74F] hover:text-[#F9844A]">
+                <button className="text-[#F9C74F] hover:text-[#F9844A] cursor-pointer">
                   Resend
                 </button>
               </p>
 
               <button
                 onClick={onClose}
-                className="text-sm text-[#F8FAFC]/50 hover:text-[#F9C74F] mt-6"
+                className="text-sm text-[#F8FAFC]/50 hover:text-[#F9C74F] mt-6 cursor-pointer"
               >
                 ← Back to Login
               </button>
