@@ -22,7 +22,6 @@ const Dashboard = lazy(() => import("../pages/Dashboard"));
 const Debts = lazy(() => import("../pages/Debts"));
 const Insurance = lazy(() => import("../pages/Insurance"));
 const Utilities = lazy(() => import("../pages/Utilities"));
-const Test = lazy(() => import("../pages/test"));
 const FAQ = lazy(() => import("../pages/FAQ"));
 const AssetsPage = lazy(() => import("../pages/Assets"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -77,7 +76,6 @@ const Routing = () => {
             <Route path="/dashboard/investments" element={<Investments />} />
             <Route path="/dashboard/banking" element={<Banking />} />
             <Route path="/dashboard/calendar" element={<Calendar />} />
-            <Route path="/dashboard/test" element={<Test />} />
           </Route>
         </Routes>
       </Suspense>
