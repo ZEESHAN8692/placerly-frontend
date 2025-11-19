@@ -11,7 +11,7 @@ import UserChat from "../pages/Chat";
 const LandingPage = lazy(() => import("../pages/LandingPage"));
 const Blog = lazy(() => import("../pages/Blog"));
 const SingleBlog = lazy(() => import("../pages/SingleBlag"));
-const Signup = lazy(() => import("../pages/signup"));
+const Signup = lazy(() => import("../pages/Signup"));
 const Login = lazy(() => import("../pages/Login"));
 const Profile = lazy(() => import("../pages/Profile"));
 const ContactUs = lazy(() => import("../pages/ContactUs"));
