@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardLayout from '../layout/sidebar'
+import DashboardLayout from '../layout/Sidebar'
 
 const Test = () => {
   return (

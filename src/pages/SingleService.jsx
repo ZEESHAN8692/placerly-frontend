@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../layout/Header';
-import Footer from '../layout/footer';
+import Footer from '../layout/Footer';
 import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 

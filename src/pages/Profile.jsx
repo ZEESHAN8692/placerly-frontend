@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DashboardLayout from "../layout/sidebar";
+import DashboardLayout from "../layout/Sidebar";
 import { profile, updateProfile, resetPassword } from "../queryFunction/queryFunction";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../layout/Header';
-import Footer from '../layout/footer';
+import Footer from '../layout/Footer';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { getPricing } from '../queryFunction/queryFunction';

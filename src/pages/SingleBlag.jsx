@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Footer from "../layout/footer";
+import Footer from "../layout/Footer";
 import Header from "../layout/Header";
 import { Link, useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";

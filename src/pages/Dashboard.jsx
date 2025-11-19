@@ -1,5 +1,5 @@
 import React from "react";
-import DashboardLayout from "../layout/sidebar";
+import DashboardLayout from "../layout/Sidebar";
 import { useQuery } from "@tanstack/react-query";
 import { getDashboard } from "../queryFunction/queryFunction";
 

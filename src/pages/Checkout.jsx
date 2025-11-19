@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getPricingById } from "../queryFunction/queryFunction";
 import axiosInstance from "../api/axiosInstance";
 import { create_checkout_session_end } from "../api/urls";
-import Footer from "../layout/footer";
+import Footer from "../layout/Footer";
 import { toast } from "react-toastify";
 
 const Checkout = () => {

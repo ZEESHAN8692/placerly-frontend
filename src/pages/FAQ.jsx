@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Header from '../layout/Header';
-import Footer from '../layout/footer';
+import Footer from '../layout/Footer';
 
 const FAQ = () => {
   const [activeCategory, setActiveCategory] = useState('all');

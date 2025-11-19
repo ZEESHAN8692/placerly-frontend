@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import axiosInstance from "../api/axiosInstance";
 import { executer_invite_end } from "../api/urls";
 import Header from "../layout/Header";
-import Footer from "../layout/footer";
+import Footer from "../layout/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 
 const InvitePage = () => {
