@@ -7,40 +7,45 @@ import { profile_end } from "../api/urls";
 
 const ProtectedSubscription = () => {
   const token = Cookies.get("token");
+
   const [loading, setLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isExecutor , setIsExecutor] = useState(false); 
+  const [isExecutor, setIsExecutor] = useState(false);
 
   useEffect(() => {
-
     if (!token) {
       setLoading(false);
       return;
     }
 
-    const checkSubscription = async () => {
+    const checkAccess = async () => {
       try {
         const res = await axiosInstance.get(profile_end);
-          
-        console.log("Subscription Status:", res.data.subscription?.status);
 
-        setIsSubscribed(res.data.subscription?.status === "active");
+        const userRole = res?.data?.role;
+        const subscriptionStatus = res?.data?.subscription?.status;
+
+        // Role check
+        if (userRole === "executor") {
+          setIsExecutor(true);
+        }
+
+        // Subscription check
+        setIsSubscribed(subscriptionStatus === "active");
       } catch (error) {
-        console.log("Subscription check error:", error);
+        console.log("Access Check Error:", error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
-    checkSubscription();
+    checkAccess();
   }, [token]);
 
-  if (loading) return <div className="text-white">Checking Subscription...</div>;
-
+  if (loading) return <div className="text-white">Checking Access...</div>;
   if (!token) return <Navigate to="/login" />;
-
+  if (isExecutor) return <Outlet />;
   if (!isSubscribed) return <Navigate to="/pricing" />;
-
   return <Outlet />;
 };
 

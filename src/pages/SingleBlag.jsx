@@ -100,7 +100,7 @@ const SingleBlog = () => {
 
               <button
                 type="submit"
-                className="mt-4 px-6 py-3 bg-[#F9C74F] text-black rounded-xl"
+                className="mt-4 px-6 py-3 bg-gradient-to-r from-[#F9C74F] to-[#F9844A] text-black rounded-xl cursor-pointer hover:scale-105 transition-transform shadow-lg"
               >
                 Submit Comment
               </button>
