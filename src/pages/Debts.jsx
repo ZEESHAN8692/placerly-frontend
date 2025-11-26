@@ -183,7 +183,7 @@ const Debts = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
             <div className="text-2xl font-bold text-[#F8FAFC] mb-2">
-              ${data?.debtsValue[0]?.total}
+              ${data?.debtsValue ?? 0}
             </div>
             <div className="text-[#F8FAFC]/60 text-sm">Total Debts</div>
           </div>
