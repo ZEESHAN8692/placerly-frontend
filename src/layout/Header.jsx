@@ -38,7 +38,7 @@ const Header = () => {
 
   // Logout handler
   const handleLogout = () => {
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    sessionStorage.removeItem("token");
     setIsLoggedIn(false)
     navigate('/')
   }
