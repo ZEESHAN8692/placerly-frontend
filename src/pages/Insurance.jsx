@@ -201,7 +201,7 @@ const InsurancePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white/5 border border-[#F8FAFC]/10 rounded-xl p-6">
             <div className="text-2xl font-bold text-[#F8FAFC] mb-2">
-              {data?.totalInsurancesValue?.[0]?.total ?? 0}
+              ${data?.totalInsurancesValue?.[0]?.total ?? 0}
             </div>
             <div className="text-[#F8FAFC]/60 text-sm">Total Insurance</div>
           </div>
