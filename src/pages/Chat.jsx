@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import Cookies from "js-cookie";
+
 
 const socket = io("https://placerly-backend-1.onrender.com");
 
@@ -10,7 +10,7 @@ export default function UserChat() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = sessionStorage.getItem("token")
 
     socket.emit("registerUser", { token });
 
