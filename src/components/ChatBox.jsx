@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 import { MessageCircle, X, Send, Minimize2 } from "lucide-react";
 
-const socket = io("http://localhost:8000");
+const socket = io("https://placerly-backend-1.onrender.com");
 
 const ChatBox = () => {
   const [messages, setMessages] = useState([]);

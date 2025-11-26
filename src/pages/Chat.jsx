@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 import Cookies from "js-cookie";
 
-const socket = io("http://localhost:8000");
+const socket = io("https://placerly-backend-1.onrender.com");
 
 export default function UserChat() {
   const [messages, setMessages] = useState([]);
