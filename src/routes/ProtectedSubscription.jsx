@@ -1,12 +1,11 @@
 // src/auth/ProtectedSubscription.js
 import React, { useEffect, useState } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import Cookies from "js-cookie";
 import axiosInstance from "../api/axiosInstance";
 import { profile_end } from "../api/urls";
 
 const ProtectedSubscription = () => {
-  const token = Cookies.get("token");
+  const token = sessionStorage.getItem("token");
 
   const [loading, setLoading] = useState(true);
   const [isSubscribed, setIsSubscribed] = useState(false);

@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
-import Cookies from "js-cookie";
+
 import { MessageCircle, X, Send, Minimize2 } from "lucide-react";
 
 const socket = io("http://localhost:8000");
@@ -21,7 +21,7 @@ const ChatBox = () => {
   useEffect(() => scrollToBottom(), [messages]);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = sessionStorage.getItem("token");
     socket.emit("registerUser", { token });
 
     const onUserRegistered = (data) => setUserId(data.userId);

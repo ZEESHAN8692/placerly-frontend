@@ -11,7 +11,19 @@ const axiosInstance = axios.create({
   withCredentials:true
 });
 
-// axiosInstance.interceptors.request.use(
-
-// )
+axiosInstance.interceptors.request.use(
+  async (config) => {
+    const token =
+      sessionStorage.getItem("token") || localStorage.getItem("token");
+    if (token) {
+      config.headers["x-access-token"] = token;
+      // config.headers.Authorization=token
+      // config.headers.Authorization=`Bearer ${token}`
+    }
+    return config;
+  },
+  function (err) {
+    Promise.reject(err);
+  }
+);
 export default axiosInstance;

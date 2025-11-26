@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import Cookies from 'js-cookie'
 import { FiUser } from 'react-icons/fi'
 
 const Header = () => {
@@ -11,8 +10,7 @@ const Header = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false)
   const dropdownRef = useRef(null)
 
-  const token = Cookies.get("token");
-  // console.log("Token from cookie:", token);
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
     if (token) {

@@ -26,6 +26,7 @@ const PlacerlyLogin = () => {
     const { mutate, isLoading } = useMutation({
         mutationFn: login,
         onSuccess: (data) => {
+            sessionStorage.setItem('token', data?.token);
             console.log("Login Success", data)
             toast.success('Login Successfull')
             navigate('/')
