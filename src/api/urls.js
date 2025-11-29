@@ -1,4 +1,4 @@
-const base_url = "https://placerly-backend-1.onrender.com/";
+const base_url = "http://localhost:8000/";
 const login_end = "/api/login";
 const register_end = "/api/register";
 const verify_email_end = "/api/verify-email";

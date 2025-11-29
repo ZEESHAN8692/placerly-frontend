@@ -1,6 +1,5 @@
 import React, { use, useState } from "react";
 import Header from "../layout/Header";
-import Cookies from "js-cookie";
 
 import { loadStripe } from "@stripe/stripe-js";
 import { useNavigate, useParams } from "react-router-dom";
@@ -14,7 +13,7 @@ import { toast } from "react-toastify";
 const Checkout = () => {
   const navigate = useNavigate()
   const { id } = useParams();
-  const token  = Cookies.get("token");
+  const token  = sessionStorage.getItem("token")
   const { data: plan, isLoading, isError } = useQuery({
     queryKey: ["singlePlan", id],
     queryFn: () => getPricingById(id),
